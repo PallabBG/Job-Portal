@@ -11,8 +11,15 @@ import Feature from "./pages/Feature";
 import AddJob from "./pages/AddJob";
 import EditJob from "./pages/Editjob";
 import SingleJob from "./pages/SingleJob";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
-
+import AdminDashboard from "./pages/AdminDashboard";
+import EmployerDashboard from "./pages/EmployerDashboard";
+import JobseekerDashboard from "./pages/JobseekerDashboard";
+import VerifyOtp from "./pages/VerifyOtp";
+import ResetPassword from "./pages/ResetPassword"
+import ResetPassOtp from "./pages/ResetPassOtp"
 
 const App = () => {
   return (
@@ -32,6 +39,16 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/f" element={<Feature />} />
+
+          <Route path="/admin-dashboard" element={<AdminDashboard/>} />
+          <Route path="/employer-dashboard" element={<EmployerDashboard/>} />
+          <Route path="/jobseeker-dashboard" element={<JobseekerDashboard/>} />
+
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/verify-otp" element={<VerifyOtp/>}/>
+          <Route path="/reset-password" element={<ResetPassword/>}/>
+          <Route path="/reset-pass-otp" element={<ResetPassOtp/>}/>
         </Routes>
       </div>
 
