@@ -64,7 +64,7 @@ const Register = () => {
           value={form.role}
           onChange={hc}
           className="w-full border p-3 rounded-lg"
-        >
+        > <option value="admin">Admin</option>
           <option value="jobseeker">Jobseeker</option>
           <option value="employer">Employer</option>
         </select>
