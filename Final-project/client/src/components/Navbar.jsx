@@ -30,6 +30,33 @@ const Navbar = () => {
           <Link to="/about" className="hover:text-blue-600">About</Link>
           <Link to="/contact" className="hover:text-blue-600">Contact</Link>
 
+          <Link
+            to="/chat"
+            className="bg-purple-600 text-white px-4 py-2 rounded-lg"
+          >
+            Chat
+          </Link>
+
+          <Link
+            to="/job-chatbot"
+            className="bg-purple-600 text-white px-4 py-2 rounded-lg"
+          >
+            AI Chatbot
+          </Link>
+
+
+          <Link to="/live-classes" className="hover:text-blue-600">Live Classes</Link>
+
+           {
+          (user?.role ==="admin" ||  user?.role ==="instructor")  &&(
+          <Link
+              to="/create-live-class"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            >
+              Create Live
+            </Link>
+         )}
+
           {
             user?.role==="employer" &&
             <Link to="/employer-dashboard" className="hover:text-blue-600">Employer</Link>

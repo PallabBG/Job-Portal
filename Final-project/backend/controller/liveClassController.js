@@ -65,6 +65,7 @@ exports.getsingelliveclasses = async (req,res)=>{
     res.json(classes);
 }
 
+//Update liveclass
 exports.updateliveclasses = async (req, res) => {
   try {
     const { title, subject, employerName, date, time } = req.body;

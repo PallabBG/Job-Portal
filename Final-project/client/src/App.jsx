@@ -21,6 +21,12 @@ import VerifyOtp from "./pages/VerifyOtp";
 import ResetPassword from "./pages/ResetPassword"
 import ResetPassOtp from "./pages/ResetPassOtp"
 
+import LiveClasses from "./pages/Liveclasses";
+import Createliveclass from "./pages/Createliveclass";
+import JoinLiveClass from "./pages/Joinliveclass";
+import ChatPage from "./pages/Chatpage";
+import JobChatbot from "./pages/JobChatbot";
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -30,7 +36,11 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
 
-         
+          <Route path="/live-classes" element={<LiveClasses />} />
+          <Route path="/create-live-class" element={<Createliveclass/>} />
+          <Route path="/join-live-class/:id" element={<JoinLiveClass />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/job-chatbot" element={<JobChatbot />} />
 
           <Route path="/add-job" element={<AddJob />} />
           <Route path="/edit-job/:id" element={<EditJob />} />
