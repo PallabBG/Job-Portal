@@ -5,7 +5,20 @@ import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { FaArrowLeft, FaBriefcase } from "react-icons/fa";
 
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // adjust to your project
+
 const AddJob = () => {
+  const { user } = useAuth();
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (user.role !== "employer") {
+    return <Navigate to="/" replace />;
+  }
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -51,9 +64,7 @@ const AddJob = () => {
 
       const data = new FormData();
 
-      Object.keys(formData).forEach((key) =>
-        data.append(key, formData[key])
-      );
+      Object.keys(formData).forEach((key) => data.append(key, formData[key]));
 
       images.forEach((img) => data.append("images", img));
 
@@ -65,7 +76,7 @@ const AddJob = () => {
             "Content-Type": "multipart/form-data",
             Authorization: token,
           },
-        }
+        },
       );
 
       toast.success("Job added successfully!");
@@ -96,9 +107,7 @@ const AddJob = () => {
         <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-2xl p-8 mb-6 shadow-lg text-center">
           <FaBriefcase className="text-4xl mx-auto mb-3" />
           <h2 className="text-3xl font-bold">Add New Job</h2>
-          <p className="text-sm opacity-90 mt-2">
-            Post a new job opportunity
-          </p>
+          <p className="text-sm opacity-90 mt-2">Post a new job opportunity</p>
         </div>
 
         {/* Form */}

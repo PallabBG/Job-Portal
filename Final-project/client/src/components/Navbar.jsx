@@ -1,92 +1,122 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import ProfileMenu from "./ProfileMenu";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const user= JSON.parse(localStorage.getItem("user"));
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/login");
-  };
+  const token = localStorage.getItem("token");
+  const { user } = useAuth();
 
   return (
-    <div className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+    <div className="bg-white/90 backdrop-blur-md shadow sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
 
         {/* Logo */}
         <h1
           onClick={() => navigate("/")}
-          className="text-2xl font-bold text-blue-600 tracking-wide cursor-pointer"
+          className="text-2xl font-bold text-blue-600 cursor-pointer"
         >
           Job Portal
         </h1>
 
-        {/* Menu */}
-        <div className="flex gap-6 items-center text-gray-700 font-medium">
+        {/* Navigation */}
+        <div className="flex items-center gap-6 text-gray-700 font-medium">
 
-          <Link to="/" className="hover:text-blue-600">Home</Link>
-          <Link to="/about" className="hover:text-blue-600">About</Link>
-          <Link to="/contact" className="hover:text-blue-600">Contact</Link>
+          {/* Public */}
+          <Link to="/" className="hover:text-blue-600 transition">
+            Home
+          </Link>
+
+          <Link to="/about" className="hover:text-blue-600 transition">
+            About
+          </Link>
+
+          <Link to="/contact" className="hover:text-blue-600 transition">
+            Contact
+          </Link>
 
           <Link
             to="/chat"
-            className="bg-purple-600 text-white px-4 py-2 rounded-lg"
+            className="hover:text-purple-600 transition"
           >
             Chat
           </Link>
 
-          <Link
-            to="/job-chatbot"
-            className="bg-purple-600 text-white px-4 py-2 rounded-lg"
-          >
-            AI Chatbot
-          </Link>
+          {/* Employer */}
+          {user?.role === "employer" && (
+            <>
+              <Link
+                to="/employer-dashboard"
+                className="hover:text-blue-600 transition"
+              >
+                Dashboard
+              </Link>
 
+              <Link
+                to="/my-jobs"
+                className="hover:text-blue-600 transition"
+              >
+                My Jobs
+              </Link>
 
-          <Link to="/live-classes" className="hover:text-blue-600">Live Classes</Link>
+              <Link
+                to="/add-job"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+              >
+                + Add Job
+              </Link>
+            </>
+          )}
 
-           {
-          (user?.role ==="admin" ||  user?.role ==="instructor")  &&(
-          <Link
-              to="/create-live-class"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          {/* Job Seeker */}
+          {user?.role === "jobseeker" && (
+            <>
+              <Link
+                to="/jobseeker-dashboard"
+                className="hover:text-blue-600 transition"
+              >
+                Dashboard
+              </Link>
+
+              <Link
+                to="/my-applications"
+                className="hover:text-blue-600 transition"
+              >
+                My Applications
+              </Link>
+            </>
+          )}
+
+          {/* Admin */}
+          {user?.role === "admin" && (
+            <Link
+              to="/admin-dashboard"
+              className="hover:text-blue-600 transition"
             >
-              Create Live
+              Dashboard
             </Link>
-         )}
+          )}
 
-          {
-            user?.role==="employer" &&
-            <Link to="/employer-dashboard" className="hover:text-blue-600">Employer</Link>
-          }
-          {
-            user?.role==="jobseeker" &&
-            <Link to="jobseeker-dashboard" className="hover:text-blue-600">Jobseeker</Link>
-          }
-          {
-            user?.role==="admin" &&
-            <Link to="Admin-dashboard" className="hover:text-blue-600">Admin</Link>
-          }
-
-          {
-          (user?.role ==="admin" ||  user?.role ==="employer")  &&(
-          <Link
-              to="/add-job"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-            >
-              Add Job
-            </Link>
-         )}
-          
+          {/* Login/Register */}
           {!token ? (
             <>
-              <Link to="/register" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Register</Link>
-              <Link to="/login" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Login</Link>
+              <Link
+                to="/register"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+              >
+                Register
+              </Link>
+
+              <Link
+                to="/login"
+                className="border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-lg transition"
+              >
+                Login
+              </Link>
             </>
-          ):(
-            <button onClick={logout} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Logout</button>
+          ) : (
+            <ProfileMenu />
           )}
         </div>
       </div>

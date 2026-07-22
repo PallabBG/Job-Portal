@@ -3,12 +3,19 @@ import axios from "axios";
 import socket from "../socket";
 import ChatBox from "../components/Chatbox";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Chatpage = () => {
-  const currentUser = JSON.parse(localStorage.getItem("user") || "null");
+  const { user: currentUser, loading } = useAuth();
 
   const [messages, setMessages] = useState([]);
-
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
   if (!currentUser) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 px-6">
@@ -47,7 +54,7 @@ const Chatpage = () => {
   const getMessages = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5500/api/messages/${currentUser._id}/${receiverId}`
+        `http://localhost:5500/api/messages/${currentUser._id}/${receiverId}`,
       );
 
       setMessages(res.data);
@@ -57,13 +64,15 @@ const Chatpage = () => {
   };
 
   useEffect(() => {
+    if (!currentUser) return;
+
     socket.emit("join", currentUser._id);
     getMessages();
 
     return () => {
       socket.off("receiveMessage");
     };
-  }, []);
+  }, [currentUser]);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">

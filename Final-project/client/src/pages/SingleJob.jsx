@@ -1,9 +1,12 @@
+import { useAuth } from "../context/AuthContext";
 import React, { useEffect, useState } from "react";
 import API from "../api/jobApi";
 import { useParams, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import ApplicationAPI from "../api/applicationApi";
 
 const SingleJob = () => {
+  const { user } = useAuth();
   const { id } = useParams();
   const [job, setJob] = useState(null);
   const [activeImage, setActiveImage] = useState(0);
@@ -28,11 +31,28 @@ const SingleJob = () => {
       </div>
     );
   }
+  const handleApply = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
+      const res = await ApplicationAPI.post(
+        `/apply/${job._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      alert(res.data.message);
+    } catch (err) {
+      alert(err.response?.data?.message || "Application failed");
+    }
+  };
   return (
     <div className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen py-10 px-4">
       <div className="max-w-6xl mx-auto">
-
         {/* Back */}
         <Link
           to="/"
@@ -42,7 +62,6 @@ const SingleJob = () => {
         </Link>
 
         <div className="bg-white rounded-3xl shadow-xl p-6 md:p-10 grid md:grid-cols-2 gap-8">
-
           {/* LEFT: IMAGE */}
           <div>
             {job.images?.length > 0 && (
@@ -80,18 +99,15 @@ const SingleJob = () => {
               </h2>
 
               <p className="mb-2 text-gray-700">
-                <span className="font-semibold">Company:</span>{" "}
-                {job.company}
+                <span className="font-semibold">Company:</span> {job.company}
               </p>
 
               <p className="mb-2 text-gray-700">
-                <span className="font-semibold">Location:</span>{" "}
-                {job.location}
+                <span className="font-semibold">Location:</span> {job.location}
               </p>
 
               <p className="mb-2 text-gray-700">
-                <span className="font-semibold">Category:</span>{" "}
-                {job.category}
+                <span className="font-semibold">Category:</span> {job.category}
               </p>
 
               <p className="mb-4 text-gray-700">
@@ -107,12 +123,35 @@ const SingleJob = () => {
 
             {/* Buttons */}
             <div className="flex gap-4 flex-wrap">
-              <Link
-                to={`/edit-job/${job._id}`}
-                className="bg-yellow-500 text-white px-6 py-3 rounded-xl hover:bg-yellow-600"
-              >
-                Edit Job
-              </Link>
+              {/* Employer */}
+              {user?.role === "employer" && (
+                <Link
+                  to={`/edit-job/${job._id}`}
+                  className="bg-yellow-500 text-white px-6 py-3 rounded-xl hover:bg-yellow-600"
+                >
+                  Edit Job
+                </Link>
+              )}
+
+              {/* Job Seeker */}
+              {user?.role === "jobseeker" && (
+                <button
+                  onClick={handleApply}
+                  className="bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700"
+                >
+                  Apply Now
+                </button>
+              )}
+
+              {/* Guest */}
+              {!user && (
+                <Link
+                  to="/login"
+                  className="bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700"
+                >
+                  Login to Apply
+                </Link>
+              )}
 
               <Link
                 to="/"
@@ -122,7 +161,6 @@ const SingleJob = () => {
               </Link>
             </div>
           </div>
-
         </div>
       </div>
     </div>

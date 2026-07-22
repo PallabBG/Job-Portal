@@ -1,15 +1,63 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
+const { protect, allowRoles } = require("../middleware/authMiddleware");
+const upload = require("../middleware/upload");
 const jobctrl = require("../controller/jobController");
-const upload = require('../middleware/upload');
 
-//multiple image upload
-router.post("/",upload.array("images",5),jobctrl.addjob);
+// ======================
+// Public Routes
+// ======================
+
 router.get("/", jobctrl.viewjob);
-router.get("/search/:keyword", jobctrl.searchjob);
+
+router.get("/search", jobctrl.searchjob);
+
+// ======================
+// Employer Routes
+// ======================
+
+router.get(
+  "/my-jobs",
+  protect,
+  allowRoles("employer"),
+  jobctrl.getEmployerJobs
+);
+
+router.get(
+  "/employer-dashboard",
+  protect,
+  allowRoles("employer"),
+  jobctrl.getEmployerDashboard
+);
+
+router.post(
+  "/",
+  protect,
+  allowRoles("employer"),
+  upload.array("images", 5),
+  jobctrl.addjob
+);
+
+router.put(
+  "/:id",
+  protect,
+  allowRoles("employer"),
+  upload.array("images", 5),
+  jobctrl.updatejob
+);
+
+router.delete(
+  "/:id",
+  protect,
+  allowRoles("employer", "admin"),
+  jobctrl.deletejob
+);
+
+// ======================
+// Dynamic Route (LAST)
+// ======================
+
 router.get("/:id", jobctrl.singeljob);
-router.put("/:id",upload.array("images",5), jobctrl.updatejob);
-router.delete("/:id", jobctrl.deletejob);
 
 module.exports = router;

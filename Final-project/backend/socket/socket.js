@@ -1,36 +1,94 @@
 const Message = require("../models/Message");
+
 const users = {};
 
-const sockethandeler = (io)=>{
-    io.on("connection",(socket)=>{
-        console.log("user connected");
-        socket.on("join",(userId)=>{
-            users[userId] = socket.id;
-            console.log("joined:",userId);
-        });
+// Get socket id of a connected user
+const getUserSocket = (userId) => users[userId];
 
-        socket.on("sendMessage", async(data)=>{
-            try {
-                const savedmsg = await Message.create(data);
-                const receversocketid = users[data.receiverId];
+const sockethandeler = (io) => {
+  io.on("connection", (socket) => {
+    console.log("User Connected:", socket.id);
 
-                if(receversocketid) {
-                    io.to(receversocketid).emit(
-                        "receiveMessage",
-                        savedmsg
-                    );
-                }
-                socket.emit(
-                   "receiveMessage",
-                        savedmsg  
-                );
-            } catch(err){
-                console.log("Socket Error:", err);
-            }
-        });
-        socket.on("disconnect", ()=>{
-            console.log("user disconnected");
-        });
+    // ==========================
+    // User joins
+    // ==========================
+    socket.on("join", (userId) => {
+      users[userId] = socket.id;
+      console.log("Joined:", userId);
     });
+
+    // ==========================
+    // User leaves (Logout)
+    // ==========================
+    socket.on("leave", (userId) => {
+      delete users[userId];
+      console.log("Left:", userId);
+    });
+
+    // ==========================
+    // Send Notification
+    // ==========================
+    socket.on("sendNotification", ({ receiverId, notification }) => {
+      const receiverSocketId = users[receiverId];
+
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit(
+          "receiveNotification",
+          notification
+        );
+      }
+    });
+
+    // ==========================
+    // Notification Read
+    // ==========================
+    socket.on("notificationsRead", () => {
+      socket.emit("notificationsUpdated");
+    });
+
+    // ==========================
+    // Send Chat Message
+    // ==========================
+    socket.on("sendMessage", async (data) => {
+      try {
+        const savedMsg = await Message.create(data);
+
+        const receiverSocketId = users[data.receiverId];
+
+        if (receiverSocketId) {
+          io.to(receiverSocketId).emit(
+            "receiveMessage",
+            savedMsg
+          );
+        }
+
+        // Send message back to sender
+        socket.emit("receiveMessage", savedMsg);
+
+      } catch (err) {
+        console.log("Socket Error:", err);
+      }
+    });
+
+    // ==========================
+    // Disconnect
+    // ==========================
+    socket.on("disconnect", () => {
+
+      for (const userId in users) {
+        if (users[userId] === socket.id) {
+          delete users[userId];
+          console.log("Disconnected:", userId);
+          break;
+        }
+      }
+
+      console.log("User Disconnected:", socket.id);
+    });
+  });
 };
-module.exports = sockethandeler;
+
+module.exports = {
+  sockethandeler,
+  getUserSocket,
+};
