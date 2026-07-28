@@ -5,12 +5,15 @@ import App from "./App.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./context/AuthContext";
 import { NotificationProvider } from "./context/NotificationContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
       <NotificationProvider>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </NotificationProvider>
     </AuthProvider>
   </StrictMode>,

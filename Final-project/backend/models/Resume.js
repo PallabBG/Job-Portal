@@ -23,6 +23,27 @@ const resumeSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    aiFeedback: {
+      atsScore: Number,
+
+      overallRating: String,
+
+      summary: String,
+
+      strengths: [String],
+
+      weaknesses: [String],
+
+      missingSections: [String],
+
+      grammarSuggestions: [String],
+
+      formatSuggestions: [String],
+
+      careerSuggestions: [String],
+
+      analyzedAt: Date,
+    },
   },
   {
     timestamps: true,

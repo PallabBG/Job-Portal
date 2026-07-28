@@ -57,6 +57,11 @@ router.put(
 );
 
 router.get(
+    "/user/:id",
+    protect,
+    authController.getPublicUser
+);
+router.get(
     "/profile/:id",
     protect,
     allowRoles("employer", "admin"),

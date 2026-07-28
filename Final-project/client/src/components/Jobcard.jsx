@@ -1,67 +1,106 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+
+import { useAuth } from "../context/AuthContext";
 
 const JobCard = ({ job, onDelete }) => {
-  const [activeImage, setActiveImage] = useState(0);
-
+  const { user } = useAuth();
   return (
-    <div className="bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 overflow-hidden border group">
-
-      {/* Image */}
-      <div className="relative">
-        <img
-          src={`http://localhost:5500/uploads/${job.images?.[activeImage]}`}
-          className="w-full h-52 object-cover group-hover:scale-105 transition"
-        />
-
-        {/* Salary */}
-        <span className="absolute top-3 left-3 bg-green-600 text-white text-xs px-3 py-1 rounded-full">
-          ₹{job.salary}
-        </span>
-      </div>
-
-      {/* Thumbnails */}
-      {job.images?.length > 1 && (
-        <div className="flex gap-2 p-3 overflow-x-auto">
-          {job.images.map((img, i) => (
-            <img
-              key={i}
-              src={`http://localhost:5500/uploads/${img}`}
-              onMouseEnter={() => setActiveImage(i)}
-              className={`w-14 h-14 rounded-md object-cover cursor-pointer border 
-              ${activeImage === i ? "border-blue-600" : "border-gray-300"}`}
-            />
-          ))}
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-200 dark:border-slate-700 p-6 hover:shadow-xl hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-300">
+      <div className="flex gap-4 items-start">
+        {" "}
+        {/* Logo */}
+        <div className="w-14 h-14 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 flex items-center justify-center overflow-hidden shrink-0">
+          <img
+            src={
+              job.employer?.companyProfile?.companyLogo
+                ? `http://localhost:5500${job.employer.companyProfile.companyLogo}`
+                : "/company-placeholder.png"
+            }
+            alt="Company Logo"
+            className="w-full h-full object-contain p-2"
+          />
         </div>
-      )}
+        {/* Center */}
+        <div className="flex-1">
+          {/* Header */}
 
-      {/* Content */}
-      <div className="p-4">
-        <h2 className="font-bold text-lg text-gray-800 line-clamp-1">
-          {job.title}
-        </h2>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">{job.title}</h2>
 
-        <p className="text-sm text-gray-500">🏢 {job.company}</p>
-        <p className="text-sm text-gray-500 mb-2">📍 {job.location}</p>
+              <h3 className="text-base font-semibold text-gray-700 dark:text-gray-200 mt-1">
+                {job.employer?.companyProfile?.companyName}
+              </h3>
 
-        <span className="text-xs bg-indigo-100 text-indigo-600 px-2 py-1 rounded-full">
-          {job.category}
-        </span>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {job.employer?.companyProfile?.industry}
+              </p>
+            </div>
 
-        <div className="flex gap-2 mt-4">
-          <Link
-            to={`/job/${job._id}`}
-            className="flex-1 text-center bg-blue-600 text-white py-2 rounded-lg"
-          >
-            View
-          </Link>
+            <div className="text-right shrink-0">
+              <span className="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-xs px-3 py-1 rounded-full">
+                {job.status}
+              </span>
 
-          <button
-            onClick={() => onDelete(job._id)}
-            className="flex-1 bg-red-600 text-white py-2 rounded-lg"
-          >
-            Delete
-          </button>
+              <h2 className="text-xl font-bold text-green-600 mt-3">
+                ₹{job.salary} LPA
+              </h2>
+
+              <p className="text-xs text-gray-500 dark:text-gray-400">Annual Salary</p>
+            </div>
+          </div>
+
+          {/* Meta */}
+
+          <div className="flex flex-wrap gap-4 text-sm text-gray-500 dark:text-gray-400 mt-5">
+            <span>📍 {job.employer?.companyProfile?.location}</span>
+
+            <span>💼 {job.jobType}</span>
+
+            <span>⭐ {job.experienceLevel}</span>
+
+            <span>👥 {job.vacancies} Vacancies</span>
+
+            <span>
+              📅{" "}
+              {job.deadline
+                ? new Date(job.deadline).toLocaleDateString("en-IN")
+                : "No Deadline"}
+            </span>
+          </div>
+
+          {/* Bottom */}
+
+          <div className="flex flex-wrap justify-between items-end gap-4 mt-5">
+            <div className="flex flex-wrap gap-2">
+              {job.skills?.slice(0, 4).map((skill) => (
+                <span
+                  key={skill}
+                  className="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full text-xs"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex gap-3">
+              <Link
+                to={`/job/${job._id}`}
+                className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white px-5 py-2 rounded-xl font-medium"
+              >
+                View Details →
+              </Link>
+
+              {(user?.role === "admin" || user?.role === "employer") && (
+                <button
+                  onClick={() => onDelete(job._id)}
+                  className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl"
+                >
+                  Delete
+                </button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

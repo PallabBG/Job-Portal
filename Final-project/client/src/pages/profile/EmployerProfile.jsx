@@ -108,12 +108,12 @@ const EmployerProfile = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
+    <div className="max-w-7xl mx-auto p-6 bg-transparent">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold">Employer Profile</h1>
-          <p className="text-gray-500">Manage your company information.</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Employer Profile</h1>
+          <p className="text-gray-500 dark:text-gray-400">Manage your company information.</p>
         </div>
 
         <div className="flex gap-3">
@@ -128,7 +128,7 @@ const EmployerProfile = () => {
             <>
               <button
                 onClick={() => setEditing(false)}
-                className="bg-gray-300 px-5 py-2 rounded-lg"
+                className="bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-slate-600 px-5 py-2 rounded-lg"
               >
                 Cancel
               </button>
@@ -145,11 +145,11 @@ const EmployerProfile = () => {
       </div>
 
       {/* Profile Completion */}
-      <div className="bg-white rounded-xl shadow p-5 mb-6">
+      <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl shadow transition-colors duration-300 p-5 mb-6">
         <div className="flex justify-between mb-2">
-          <span className="font-semibold">Profile Completion</span>
+          <span className="font-semibold text-gray-900 dark:text-white">Profile Completion</span>
 
-          <span>{completion}%</span>
+          <span className="dark:text-white">{completion}%</span>
         </div>
 
         <div className="w-full bg-gray-200 rounded-full h-3">

@@ -1,0 +1,802 @@
+[
+  {
+    "title": "Finance Manager",
+    "salary": 1.97,
+    "category": "Finance",
+    "jobType": "Part-Time",
+    "experienceLevel": "Fresher",
+    "skills": [
+      "Excel",
+      "Tally",
+      "Financial Modeling"
+    ],
+    "vacancies": 6,
+    "deadline": "11/15/2026",
+    "status": "Closed",
+    "description": "We are hiring a Finance Manager to join Skyward Analytics. This is a Part-Time role for Fresher candidates based in Bangalore, India, focusing on finance."
+  },
+  {
+    "title": "Logistics Coordinator",
+    "salary": 4.27,
+    "category": "Operations",
+    "jobType": "Internship",
+    "experienceLevel": "Junior",
+    "skills": [
+      "Logistics",
+      "Process Improvement",
+      "Inventory Management"
+    ],
+    "vacancies": 3,
+    "deadline": "01/22/2027",
+    "status": "Open",
+    "description": "We are hiring a Logistics Coordinator to join Vertex Retail. This is a Internship role for Junior candidates based in Mumbai, India, focusing on operations."
+  },
+  {
+    "title": "Editor",
+    "salary": 7.57,
+    "category": "Content Writing",
+    "jobType": "Contract",
+    "experienceLevel": "Mid-Level",
+    "skills": [
+      "Editing",
+      "Content Planning",
+      "Copywriting"
+    ],
+    "vacancies": 8,
+    "deadline": "03/02/2026",
+    "status": "Open",
+    "description": "We are hiring a Editor to join Coreline Systems. This is a Contract role for Mid-Level candidates based in Delhi, India, focusing on content writing."
+  },
+  {
+    "title": "QA Engineer",
+    "salary": 15.07,
+    "category": "Software Development",
+    "jobType": "Remote",
+    "experienceLevel": "Senior",
+    "skills": [
+      "Next.js",
+      "GraphQL",
+      "Docker"
+    ],
+    "vacancies": 5,
+    "deadline": "05/09/2026",
+    "status": "Open",
+    "description": "We are hiring a QA Engineer to join NovaHealth. This is a Remote role for Senior candidates based in Hyderabad, India, focusing on software development."
+  },
+  {
+    "title": "SEO Specialist",
+    "salary": 1.97,
+    "category": "Marketing",
+    "jobType": "Hybrid",
+    "experienceLevel": "Fresher",
+    "skills": [
+      "SEO",
+      "Analytics",
+      "Email Marketing"
+    ],
+    "vacancies": 2,
+    "deadline": "07/16/2027",
+    "status": "Open",
+    "description": "We are hiring a SEO Specialist to join Urban Roots Foods. This is a Hybrid role for Fresher candidates based in Pune, India, focusing on marketing."
+  },
+  {
+    "title": "Account Manager",
+    "salary": 4.28,
+    "category": "Sales",
+    "jobType": "Full-Time",
+    "experienceLevel": "Junior",
+    "skills": [
+      "Salesforce",
+      "Negotiation",
+      "CRM"
+    ],
+    "vacancies": 7,
+    "deadline": "09/23/2026",
+    "status": "Open",
+    "description": "We are hiring a Account Manager to join Quantum Byte. This is a Full-Time role for Junior candidates based in Chennai, India, focusing on sales."
+  },
+  {
+    "title": "Motion Graphics Artist",
+    "salary": 7.58,
+    "category": "Design",
+    "jobType": "Part-Time",
+    "experienceLevel": "Mid-Level",
+    "skills": [
+      "Photoshop",
+      "Sketch",
+      "Prototyping"
+    ],
+    "vacancies": 4,
+    "deadline": "11/03/2026",
+    "status": "Open",
+    "description": "We are hiring a Motion Graphics Artist to join Bluepeak Consulting. This is a Part-Time role for Mid-Level candidates based in Kolkata, India, focusing on design."
+  },
+  {
+    "title": "BI Analyst",
+    "salary": 15.08,
+    "category": "Data Science",
+    "jobType": "Internship",
+    "experienceLevel": "Senior",
+    "skills": [
+      "Python",
+      "SQL",
+      "Pandas"
+    ],
+    "vacancies": 1,
+    "deadline": "01/10/2027",
+    "status": "Open",
+    "description": "We are hiring a BI Analyst to join Silverline BPO. This is a Internship role for Senior candidates based in Remote, focusing on data science."
+  },
+  {
+    "title": "Customer Success Manager",
+    "salary": 1.98,
+    "category": "Customer Support",
+    "jobType": "Contract",
+    "experienceLevel": "Fresher",
+    "skills": [
+      "Communication",
+      "CRM",
+      "Zendesk"
+    ],
+    "vacancies": 6,
+    "deadline": "03/17/2026",
+    "status": "Closed",
+    "description": "We are hiring a Customer Success Manager to join Craftly Studio. This is a Contract role for Fresher candidates based in Ahmedabad, India, focusing on customer support."
+  },
+  {
+    "title": "HR Business Partner",
+    "salary": 4.28,
+    "category": "Human Resources",
+    "jobType": "Remote",
+    "experienceLevel": "Junior",
+    "skills": [
+      "HRIS",
+      "Recruitment",
+      "Onboarding"
+    ],
+    "vacancies": 3,
+    "deadline": "05/24/2026",
+    "status": "Open",
+    "description": "We are hiring a HR Business Partner to join Marketo Hub. This is a Remote role for Junior candidates based in Noida, India, focusing on human resources."
+  },
+  {
+    "title": "Financial Analyst",
+    "salary": 7.58,
+    "category": "Finance",
+    "jobType": "Hybrid",
+    "experienceLevel": "Mid-Level",
+    "skills": [
+      "Excel",
+      "Tally",
+      "Financial Modeling"
+    ],
+    "vacancies": 8,
+    "deadline": "07/04/2027",
+    "status": "Open",
+    "description": "We are hiring a Financial Analyst to join EduSpark. This is a Hybrid role for Mid-Level candidates based in Gurgaon, India, focusing on finance."
+  },
+  {
+    "title": "Supply Chain Analyst",
+    "salary": 15.08,
+    "category": "Operations",
+    "jobType": "Full-Time",
+    "experienceLevel": "Senior",
+    "skills": [
+      "Logistics",
+      "Process Improvement",
+      "ERP"
+    ],
+    "vacancies": 5,
+    "deadline": "09/11/2026",
+    "status": "Open",
+    "description": "We are hiring a Supply Chain Analyst to join Northwind Manufacturing. This is a Full-Time role for Senior candidates based in Jaipur, India, focusing on operations."
+  },
+  {
+    "title": "Editor",
+    "salary": 1.98,
+    "category": "Content Writing",
+    "jobType": "Part-Time",
+    "experienceLevel": "Fresher",
+    "skills": [
+      "Copywriting",
+      "SEO Writing",
+      "Editing"
+    ],
+    "vacancies": 2,
+    "deadline": "11/18/2026",
+    "status": "Open",
+    "description": "We are hiring a Editor to join Rapidcart. This is a Part-Time role for Fresher candidates based in Chandigarh, India, focusing on content writing."
+  },
+  {
+    "title": "Backend Developer",
+    "salary": 4.28,
+    "category": "Software Development",
+    "jobType": "Internship",
+    "experienceLevel": "Junior",
+    "skills": [
+      "React",
+      "Next.js",
+      "GraphQL"
+    ],
+    "vacancies": 7,
+    "deadline": "01/25/2027",
+    "status": "Open",
+    "description": "We are hiring a Backend Developer to join Zenith Finance. This is a Internship role for Junior candidates based in Kochi, India, focusing on software development."
+  },
+  {
+    "title": "SEO Specialist",
+    "salary": 7.58,
+    "category": "Marketing",
+    "jobType": "Contract",
+    "experienceLevel": "Mid-Level",
+    "skills": [
+      "HubSpot",
+      "SEO",
+      "Google Ads"
+    ],
+    "vacancies": 4,
+    "deadline": "03/05/2026",
+    "status": "Open",
+    "description": "We are hiring a SEO Specialist to join Orbit Telecom. This is a Contract role for Mid-Level candidates based in Bangalore, India, focusing on marketing."
+  },
+  {
+    "title": "Account Manager",
+    "salary": 15.08,
+    "category": "Sales",
+    "jobType": "Remote",
+    "experienceLevel": "Senior",
+    "skills": [
+      "Salesforce",
+      "Lead Generation",
+      "Negotiation"
+    ],
+    "vacancies": 1,
+    "deadline": "05/12/2026",
+    "status": "Open",
+    "description": "We are hiring a Account Manager to join Harborline Shipping. This is a Remote role for Senior candidates based in Mumbai, India, focusing on sales."
+  },
+  {
+    "title": "Motion Graphics Artist",
+    "salary": 1.98,
+    "category": "Design",
+    "jobType": "Hybrid",
+    "experienceLevel": "Fresher",
+    "skills": [
+      "Figma",
+      "Adobe XD",
+      "Photoshop"
+    ],
+    "vacancies": 6,
+    "deadline": "07/19/2027",
+    "status": "Closed",
+    "description": "We are hiring a Motion Graphics Artist to join Brightside Insurance. This is a Hybrid role for Fresher candidates based in Delhi, India, focusing on design."
+  },
+  {
+    "title": "BI Analyst",
+    "salary": 4.28,
+    "category": "Data Science",
+    "jobType": "Full-Time",
+    "experienceLevel": "Junior",
+    "skills": [
+      "R",
+      "Excel",
+      "Power BI"
+    ],
+    "vacancies": 3,
+    "deadline": "09/26/2026",
+    "status": "Open",
+    "description": "We are hiring a BI Analyst to join Loomis Textiles. This is a Full-Time role for Junior candidates based in Hyderabad, India, focusing on data science."
+  },
+  {
+    "title": "Customer Support Executive",
+    "salary": 7.58,
+    "category": "Customer Support",
+    "jobType": "Part-Time",
+    "experienceLevel": "Mid-Level",
+    "skills": [
+      "Troubleshooting",
+      "CRM",
+      "Communication"
+    ],
+    "vacancies": 8,
+    "deadline": "11/06/2026",
+    "status": "Open",
+    "description": "We are hiring a Customer Support Executive to join Fernwood Realty. This is a Part-Time role for Mid-Level candidates based in Pune, India, focusing on customer support."
+  },
+  {
+    "title": "Talent Acquisition Specialist",
+    "salary": 15.08,
+    "category": "Human Resources",
+    "jobType": "Internship",
+    "experienceLevel": "Senior",
+    "skills": [
+      "Recruitment",
+      "Onboarding",
+      "HRIS"
+    ],
+    "vacancies": 5,
+    "deadline": "01/13/2027",
+    "status": "Open",
+    "description": "We are hiring a Talent Acquisition Specialist to join Cinder Games. This is a Internship role for Senior candidates based in Chennai, India, focusing on human resources."
+  },
+  {
+    "title": "Finance Manager",
+    "salary": 1.98,
+    "category": "Finance",
+    "jobType": "Contract",
+    "experienceLevel": "Fresher",
+    "skills": [
+      "Excel",
+      "Tally",
+      "Financial Modeling"
+    ],
+    "vacancies": 2,
+    "deadline": "03/20/2026",
+    "status": "Open",
+    "description": "We are hiring a Finance Manager to join Wavelength Audio. This is a Contract role for Fresher candidates based in Kolkata, India, focusing on finance."
+  },
+  {
+    "title": "Logistics Coordinator",
+    "salary": 4.28,
+    "category": "Operations",
+    "jobType": "Remote",
+    "experienceLevel": "Junior",
+    "skills": [
+      "Logistics",
+      "Inventory Management",
+      "SAP"
+    ],
+    "vacancies": 7,
+    "deadline": "05/27/2026",
+    "status": "Open",
+    "description": "We are hiring a Logistics Coordinator to join TrueNorth HR. This is a Remote role for Junior candidates based in Remote, focusing on operations."
+  },
+  {
+    "title": "Editor",
+    "salary": 7.58,
+    "category": "Content Writing",
+    "jobType": "Hybrid",
+    "experienceLevel": "Mid-Level",
+    "skills": [
+      "WordPress",
+      "Editing",
+      "Copywriting"
+    ],
+    "vacancies": 4,
+    "deadline": "07/07/2027",
+    "status": "Open",
+    "description": "We are hiring a Editor to join Ashgrove Analytics. This is a Hybrid role for Mid-Level candidates based in Ahmedabad, India, focusing on content writing."
+  },
+  {
+    "title": "Mobile App Developer",
+    "salary": 15.08,
+    "category": "Software Development",
+    "jobType": "Full-Time",
+    "experienceLevel": "Senior",
+    "skills": [
+      "Java",
+      "Python",
+      "React"
+    ],
+    "vacancies": 1,
+    "deadline": "09/14/2026",
+    "status": "Open",
+    "description": "We are hiring a Mobile App Developer to join Ferrowatt Energy. This is a Full-Time role for Senior candidates based in Noida, India, focusing on software development."
+  },
+  {
+    "title": "SEO Specialist",
+    "salary": 1.99,
+    "category": "Marketing",
+    "jobType": "Part-Time",
+    "experienceLevel": "Fresher",
+    "skills": [
+      "Content Strategy",
+      "HubSpot",
+      "Google Ads"
+    ],
+    "vacancies": 6,
+    "deadline": "11/21/2026",
+    "status": "Closed",
+    "description": "We are hiring a SEO Specialist to join Lumenpath Health. This is a Part-Time role for Fresher candidates based in Gurgaon, India, focusing on marketing."
+  },
+  {
+    "title": "Account Manager",
+    "salary": 4.29,
+    "category": "Sales",
+    "jobType": "Internship",
+    "experienceLevel": "Junior",
+    "skills": [
+      "CRM",
+      "Negotiation",
+      "Lead Generation"
+    ],
+    "vacancies": 3,
+    "deadline": "01/01/2027",
+    "status": "Open",
+    "description": "We are hiring a Account Manager to join Kestrel Aviation. This is a Internship role for Junior candidates based in Jaipur, India, focusing on sales."
+  },
+  {
+    "title": "Motion Graphics Artist",
+    "salary": 7.59,
+    "category": "Design",
+    "jobType": "Contract",
+    "experienceLevel": "Mid-Level",
+    "skills": [
+      "Photoshop",
+      "Prototyping",
+      "Illustrator"
+    ],
+    "vacancies": 8,
+    "deadline": "03/08/2026",
+    "status": "Open",
+    "description": "We are hiring a Motion Graphics Artist to join Ridgeline Outdoors. This is a Contract role for Mid-Level candidates based in Chandigarh, India, focusing on design."
+  },
+  {
+    "title": "BI Analyst",
+    "salary": 15.09,
+    "category": "Data Science",
+    "jobType": "Remote",
+    "experienceLevel": "Senior",
+    "skills": [
+      "TensorFlow",
+      "Python",
+      "Pandas"
+    ],
+    "vacancies": 5,
+    "deadline": "05/15/2026",
+    "status": "Open",
+    "description": "We are hiring a BI Analyst to join TechNova. This is a Remote role for Senior candidates based in Kochi, India, focusing on data science."
+  },
+  {
+    "title": "Customer Success Manager",
+    "salary": 1.99,
+    "category": "Customer Support",
+    "jobType": "Hybrid",
+    "experienceLevel": "Fresher",
+    "skills": [
+      "CRM",
+      "Troubleshooting",
+      "Freshdesk"
+    ],
+    "vacancies": 2,
+    "deadline": "07/22/2027",
+    "status": "Open",
+    "description": "We are hiring a Customer Success Manager to join DataForge. This is a Hybrid role for Fresher candidates based in Bangalore, India, focusing on customer support."
+  },
+  {
+    "title": "HR Business Partner",
+    "salary": 4.29,
+    "category": "Human Resources",
+    "jobType": "Full-Time",
+    "experienceLevel": "Junior",
+    "skills": [
+      "Recruitment",
+      "Onboarding",
+      "HRIS"
+    ],
+    "vacancies": 7,
+    "deadline": "09/02/2026",
+    "status": "Open",
+    "description": "We are hiring a HR Business Partner to join CloudSphere. This is a Full-Time role for Junior candidates based in Mumbai, India, focusing on human resources."
+  },
+  {
+    "title": "Financial Analyst",
+    "salary": 7.59,
+    "category": "Finance",
+    "jobType": "Part-Time",
+    "experienceLevel": "Mid-Level",
+    "skills": [
+      "Financial Modeling",
+      "Taxation",
+      "Excel"
+    ],
+    "vacancies": 4,
+    "deadline": "11/09/2026",
+    "status": "Open",
+    "description": "We are hiring a Financial Analyst to join PixelWorks. This is a Part-Time role for Mid-Level candidates based in Delhi, India, focusing on finance."
+  },
+  {
+    "title": "Supply Chain Analyst",
+    "salary": 15.09,
+    "category": "Operations",
+    "jobType": "Internship",
+    "experienceLevel": "Senior",
+    "skills": [
+      "Logistics",
+      "Process Improvement",
+      "Inventory Management"
+    ],
+    "vacancies": 1,
+    "deadline": "01/16/2027",
+    "status": "Open",
+    "description": "We are hiring a Supply Chain Analyst to join Nexlify. This is a Internship role for Senior candidates based in Hyderabad, India, focusing on operations."
+  },
+  {
+    "title": "Editor",
+    "salary": 1.99,
+    "category": "Content Writing",
+    "jobType": "Contract",
+    "experienceLevel": "Fresher",
+    "skills": [
+      "WordPress",
+      "Copywriting",
+      "SEO Writing"
+    ],
+    "vacancies": 6,
+    "deadline": "03/23/2026",
+    "status": "Closed",
+    "description": "We are hiring a Editor to join BrightPath Media. This is a Contract role for Fresher candidates based in Pune, India, focusing on content writing."
+  },
+  {
+    "title": "Frontend Developer",
+    "salary": 4.29,
+    "category": "Software Development",
+    "jobType": "Remote",
+    "experienceLevel": "Junior",
+    "skills": [
+      "Node.js",
+      "MongoDB",
+      "Express"
+    ],
+    "vacancies": 3,
+    "deadline": "05/03/2026",
+    "status": "Open",
+    "description": "We are hiring a Frontend Developer to join FinEdge Solutions. This is a Remote role for Junior candidates based in Chennai, India, focusing on software development."
+  },
+  {
+    "title": "SEO Specialist",
+    "salary": 7.59,
+    "category": "Marketing",
+    "jobType": "Hybrid",
+    "experienceLevel": "Mid-Level",
+    "skills": [
+      "SEO",
+      "Google Ads",
+      "Content Strategy"
+    ],
+    "vacancies": 8,
+    "deadline": "07/10/2027",
+    "status": "Open",
+    "description": "We are hiring a SEO Specialist to join Greenline Logistics. This is a Hybrid role for Mid-Level candidates based in Kolkata, India, focusing on marketing."
+  },
+  {
+    "title": "Account Manager",
+    "salary": 15.09,
+    "category": "Sales",
+    "jobType": "Full-Time",
+    "experienceLevel": "Senior",
+    "skills": [
+      "Negotiation",
+      "CRM",
+      "Salesforce"
+    ],
+    "vacancies": 5,
+    "deadline": "09/17/2026",
+    "status": "Open",
+    "description": "We are hiring a Account Manager to join Skyward Analytics. This is a Full-Time role for Senior candidates based in Remote, focusing on sales."
+  },
+  {
+    "title": "Motion Graphics Artist",
+    "salary": 1.99,
+    "category": "Design",
+    "jobType": "Part-Time",
+    "experienceLevel": "Fresher",
+    "skills": [
+      "Figma",
+      "Photoshop",
+      "Prototyping"
+    ],
+    "vacancies": 2,
+    "deadline": "11/24/2026",
+    "status": "Open",
+    "description": "We are hiring a Motion Graphics Artist to join Vertex Retail. This is a Part-Time role for Fresher candidates based in Ahmedabad, India, focusing on design."
+  },
+  {
+    "title": "BI Analyst",
+    "salary": 4.29,
+    "category": "Data Science",
+    "jobType": "Internship",
+    "experienceLevel": "Junior",
+    "skills": [
+      "Python",
+      "SQL",
+      "Pandas"
+    ],
+    "vacancies": 7,
+    "deadline": "01/04/2027",
+    "status": "Open",
+    "description": "We are hiring a BI Analyst to join Coreline Systems. This is a Internship role for Junior candidates based in Noida, India, focusing on data science."
+  },
+  {
+    "title": "Customer Support Executive",
+    "salary": 7.59,
+    "category": "Customer Support",
+    "jobType": "Contract",
+    "experienceLevel": "Mid-Level",
+    "skills": [
+      "Zendesk",
+      "Freshdesk",
+      "Communication"
+    ],
+    "vacancies": 4,
+    "deadline": "03/11/2026",
+    "status": "Open",
+    "description": "We are hiring a Customer Support Executive to join NovaHealth. This is a Contract role for Mid-Level candidates based in Gurgaon, India, focusing on customer support."
+  },
+  {
+    "title": "Talent Acquisition Specialist",
+    "salary": 15.09,
+    "category": "Human Resources",
+    "jobType": "Remote",
+    "experienceLevel": "Senior",
+    "skills": [
+      "Employee Relations",
+      "Payroll",
+      "HRIS"
+    ],
+    "vacancies": 1,
+    "deadline": "05/18/2026",
+    "status": "Open",
+    "description": "We are hiring a Talent Acquisition Specialist to join Urban Roots Foods. This is a Remote role for Senior candidates based in Jaipur, India, focusing on human resources."
+  },
+  {
+    "title": "Finance Manager",
+    "salary": 1.99,
+    "category": "Finance",
+    "jobType": "Hybrid",
+    "experienceLevel": "Fresher",
+    "skills": [
+      "Excel",
+      "Tally",
+      "Financial Modeling"
+    ],
+    "vacancies": 6,
+    "deadline": "07/25/2027",
+    "status": "Closed",
+    "description": "We are hiring a Finance Manager to join Quantum Byte. This is a Hybrid role for Fresher candidates based in Chandigarh, India, focusing on finance."
+  },
+  {
+    "title": "Logistics Coordinator",
+    "salary": 4.29,
+    "category": "Operations",
+    "jobType": "Full-Time",
+    "experienceLevel": "Junior",
+    "skills": [
+      "Logistics",
+      "Inventory Management",
+      "ERP"
+    ],
+    "vacancies": 3,
+    "deadline": "09/05/2026",
+    "status": "Open",
+    "description": "We are hiring a Logistics Coordinator to join Bluepeak Consulting. This is a Full-Time role for Junior candidates based in Kochi, India, focusing on operations."
+  },
+  {
+    "title": "Editor",
+    "salary": 7.59,
+    "category": "Content Writing",
+    "jobType": "Part-Time",
+    "experienceLevel": "Mid-Level",
+    "skills": [
+      "WordPress",
+      "Content Planning",
+      "Copywriting"
+    ],
+    "vacancies": 8,
+    "deadline": "11/12/2026",
+    "status": "Open",
+    "description": "We are hiring a Editor to join Silverline BPO. This is a Part-Time role for Mid-Level candidates based in Bangalore, India, focusing on content writing."
+  },
+  {
+    "title": "DevOps Engineer",
+    "salary": 15.1,
+    "category": "Software Development",
+    "jobType": "Internship",
+    "experienceLevel": "Senior",
+    "skills": [
+      "React",
+      "Node.js",
+      "MongoDB"
+    ],
+    "vacancies": 5,
+    "deadline": "01/19/2027",
+    "status": "Open",
+    "description": "We are hiring a DevOps Engineer to join Craftly Studio. This is a Internship role for Senior candidates based in Mumbai, India, focusing on software development."
+  },
+  {
+    "title": "SEO Specialist",
+    "salary": 2.0,
+    "category": "Marketing",
+    "jobType": "Contract",
+    "experienceLevel": "Fresher",
+    "skills": [
+      "SEO",
+      "Google Ads",
+      "Analytics"
+    ],
+    "vacancies": 2,
+    "deadline": "03/26/2026",
+    "status": "Open",
+    "description": "We are hiring a SEO Specialist to join Marketo Hub. This is a Contract role for Fresher candidates based in Delhi, India, focusing on marketing."
+  },
+  {
+    "title": "Account Manager",
+    "salary": 4.3,
+    "category": "Sales",
+    "jobType": "Remote",
+    "experienceLevel": "Junior",
+    "skills": [
+      "Lead Generation",
+      "Negotiation",
+      "Salesforce"
+    ],
+    "vacancies": 7,
+    "deadline": "05/06/2026",
+    "status": "Open",
+    "description": "We are hiring a Account Manager to join EduSpark. This is a Remote role for Junior candidates based in Hyderabad, India, focusing on sales."
+  },
+  {
+    "title": "Motion Graphics Artist",
+    "salary": 7.6,
+    "category": "Design",
+    "jobType": "Hybrid",
+    "experienceLevel": "Mid-Level",
+    "skills": [
+      "Prototyping",
+      "Illustrator",
+      "Adobe XD"
+    ],
+    "vacancies": 4,
+    "deadline": "07/13/2027",
+    "status": "Open",
+    "description": "We are hiring a Motion Graphics Artist to join Northwind Manufacturing. This is a Hybrid role for Mid-Level candidates based in Pune, India, focusing on design."
+  },
+  {
+    "title": "BI Analyst",
+    "salary": 15.1,
+    "category": "Data Science",
+    "jobType": "Full-Time",
+    "experienceLevel": "Senior",
+    "skills": [
+      "SQL",
+      "TensorFlow",
+      "Pandas"
+    ],
+    "vacancies": 1,
+    "deadline": "09/20/2026",
+    "status": "Open",
+    "description": "We are hiring a BI Analyst to join Rapidcart. This is a Full-Time role for Senior candidates based in Chennai, India, focusing on data science."
+  },
+  {
+    "title": "Customer Success Manager",
+    "salary": 2.0,
+    "category": "Customer Support",
+    "jobType": "Part-Time",
+    "experienceLevel": "Fresher",
+    "skills": [
+      "Communication",
+      "Troubleshooting",
+      "Freshdesk"
+    ],
+    "vacancies": 6,
+    "deadline": "11/27/2026",
+    "status": "Closed",
+    "description": "We are hiring a Customer Success Manager to join Zenith Finance. This is a Part-Time role for Fresher candidates based in Kolkata, India, focusing on customer support."
+  },
+  {
+    "title": "HR Business Partner",
+    "salary": 4.3,
+    "category": "Human Resources",
+    "jobType": "Internship",
+    "experienceLevel": "Junior",
+    "skills": [
+      "Onboarding",
+      "Recruitment",
+      "Employee Relations"
+    ],
+    "vacancies": 3,
+    "deadline": "01/07/2027",
+    "status": "Open",
+    "description": "We are hiring a HR Business Partner to join Orbit Telecom. This is a Internship role for Junior candidates based in Remote, focusing on human resources."
+  }
+]

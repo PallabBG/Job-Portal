@@ -49,54 +49,96 @@ const SocialLinksCard = ({
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6">
-      <h2 className="text-xl font-semibold mb-5">
+  <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-3xl shadow-lg p-6 transition-colors duration-300">
+
+    {/* Header */}
+    <div className="mb-6">
+
+      <h2 className="text-xl font-bold text-gray-900 dark:text-white">
         🌐 Social Links
       </h2>
 
-      <div className="space-y-4">
-        {links.map((link) => (
-          <div key={link.key}>
-            <label className="block text-sm font-medium mb-1">
-              {link.icon} {link.label}
-            </label>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        Connect your coding profiles, portfolio and professional accounts.
+      </p>
 
-            {editing ? (
-              <input
-                type="url"
-                placeholder={link.placeholder}
-                value={socialLinks[link.key]}
-                onChange={(e) =>
-                  setSocialLinks({
-                    ...socialLinks,
-                    [link.key]: e.target.value,
-                  })
-                }
-                className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
-              />
-            ) : (
-              <>
-                {socialLinks[link.key] ? (
-                  <a
-                    href={socialLinks[link.key]}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline break-all"
-                  >
-                    {socialLinks[link.key]}
-                  </a>
-                ) : (
-                  <p className="text-gray-400">
-                    Not provided
-                  </p>
-                )}
-              </>
-            )}
-          </div>
-        ))}
-      </div>
     </div>
-  );
+
+    <div className="space-y-5">
+
+      {links.map((link) => (
+
+        <div
+          key={link.key}
+          className="border border-gray-200 dark:border-slate-700 rounded-2xl bg-gray-50 dark:bg-slate-900 p-4 transition-colors duration-300"
+        >
+
+          <label className="flex items-center gap-2 font-medium text-gray-800 dark:text-gray-200 mb-3">
+
+            <span className="text-xl">
+              {link.icon}
+            </span>
+
+            <span>
+              {link.label}
+            </span>
+
+          </label>
+
+          {editing ? (
+
+            <input
+              type="url"
+              placeholder={link.placeholder}
+              value={socialLinks[link.key]}
+              onChange={(e) =>
+                setSocialLinks({
+                  ...socialLinks,
+                  [link.key]: e.target.value,
+                })
+              }
+              className="w-full rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+            />
+
+          ) : (
+
+            socialLinks[link.key] ? (
+
+              <a
+                href={socialLinks[link.key]}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:underline break-all font-medium"
+              >
+                🔗 {socialLinks[link.key]}
+              </a>
+
+            ) : (
+
+              <div className="flex items-center gap-2 text-gray-400 dark:text-gray-500">
+
+                <span className="text-lg">
+                  —
+                </span>
+
+                <span>
+                  Not provided
+                </span>
+
+              </div>
+
+            )
+
+          )}
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </div>
+);
 };
 
 export default SocialLinksCard;

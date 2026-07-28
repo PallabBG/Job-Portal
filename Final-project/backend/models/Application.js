@@ -38,7 +38,7 @@ const applicationSchema = new mongoose.Schema(
       ],
       default: "Applied",
     },
-    
+
     statusUpdatedAt: {
       type: Date,
     },
@@ -46,6 +46,23 @@ const applicationSchema = new mongoose.Schema(
     coverLetter: {
       type: String,
       default: "",
+    },
+    aiScreening: {
+      score: Number,
+
+      recommendation: String,
+
+      strengths: [String],
+
+      missingSkills: [String],
+
+      experienceMatch: String,
+
+      educationMatch: String,
+
+      summary: String,
+
+      analyzedAt: Date,
     },
   },
   {

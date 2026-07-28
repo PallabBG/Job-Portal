@@ -31,119 +31,152 @@ import MyJobs from "./pages/MyJobs";
 import JobApplicants from "./pages/JobApplicants";
 import CandidateProfile from "./pages/CandidateProfile";
 import Notifications from "./pages/Notifications";
+import JobRecommendations from "./pages/JobRecommendations";
+import InterviewQuestions from "./pages/InterviewQuestions";
+import ConversationPage from "./pages/ConversationPage";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Navbar />
+      <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950 transition-colors duration-300">
+        <Navbar />
 
-      <div className="min-h-screen">
-        <Routes>
-          <Route path="/" element={<Home />} />
+        <main className="flex-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
 
-          <Route path="/chat" element={<ChatPage />} />
-          <Route path="/job-chatbot" element={<JobChatbot />} />
+            <Route
+              path="/chat"
+              element={
+                <ProtectedRoute roles={["employer", "jobseeker"]}>
+                  <ConversationPage />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/add-job"
-            element={
-              <ProtectedRoute roles={["employer"]}>
-                <AddJob />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/edit-job/:id"
-            element={
-              <ProtectedRoute roles={["employer"]}>
-                <EditJob />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/job/:id" element={<SingleJob />} />
+            <Route
+              path="/chat/:receiverId"
+              element={
+                <ProtectedRoute roles={["employer", "jobseeker"]}>
+                  <ChatPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/job-chatbot" element={<JobChatbot />} />
 
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/f" element={<Feature />} />
+            <Route
+              path="/add-job"
+              element={
+                <ProtectedRoute roles={["employer"]}>
+                  <AddJob />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/edit-job/:id"
+              element={
+                <ProtectedRoute roles={["employer"]}>
+                  <EditJob />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/job/:id" element={<SingleJob />} />
 
-          <Route
-            path="/admin-dashboard"
-            element={
-              <ProtectedRoute roles={["admin"]}>
-                <AdminDashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/employer-dashboard"
-            element={
-              <ProtectedRoute roles={["employer"]}>
-                <EmployerDashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/jobseeker-dashboard"
-            element={
-              <ProtectedRoute roles={["jobseeker"]}>
-                <JobseekerDashboard />
-              </ProtectedRoute>
-            }
-          />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/f" element={<Feature />} />
 
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/verify-otp" element={<VerifyOtp />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/reset-pass-otp" element={<ResetPassOtp />} />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute roles={["admin", "employer", "jobseeker"]}>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/unauthorized" element={<Unauthorized />} />
-          <Route
-            path="/my-applications"
-            element={
-              <ProtectedRoute roles={["jobseeker"]}>
-                <MyApplications />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/my-jobs"
-            element={
-              <ProtectedRoute roles={["employer"]}>
-                <MyJobs />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/admin-dashboard"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/employer-dashboard"
+              element={
+                <ProtectedRoute roles={["employer"]}>
+                  <EmployerDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/jobseeker-dashboard"
+              element={
+                <ProtectedRoute roles={["jobseeker"]}>
+                  <JobseekerDashboard />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/job/:jobId/applicants"
-            element={
-              <ProtectedRoute roles={["employer", "admin"]}>
-                <JobApplicants />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/candidate/:id"
-            element={
-              <ProtectedRoute roles={["employer", "admin"]}>
-                <CandidateProfile />
-              </ProtectedRoute>
-            }
-          />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/verify-otp" element={<VerifyOtp />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/reset-pass-otp" element={<ResetPassOtp />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute roles={["admin", "employer", "jobseeker"]}>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route
+              path="/my-applications"
+              element={
+                <ProtectedRoute roles={["jobseeker"]}>
+                  <MyApplications />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/my-jobs"
+              element={
+                <ProtectedRoute roles={["employer"]}>
+                  <MyJobs />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route path="/notifications" element={<Notifications />} />
-        </Routes>
+            <Route
+              path="/job/:jobId/applicants"
+              element={
+                <ProtectedRoute roles={["employer", "admin"]}>
+                  <JobApplicants />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/candidate/:id"
+              element={
+                <ProtectedRoute roles={["employer", "admin"]}>
+                  <CandidateProfile />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/notifications" element={<Notifications />} />
+            <Route
+              path="/job-recommendations"
+              element={<JobRecommendations />}
+            />
+            <Route
+              path="/interview/:jobId"
+              element={
+                <ProtectedRoute allowedRoles={["jobseeker"]}>
+                  <InterviewQuestions />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </main>
+
+        <Footer />
       </div>
-
-      <Footer />
     </BrowserRouter>
   );
 };

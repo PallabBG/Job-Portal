@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { protect, allowRoles } = require("../middleware/authMiddleware");
+const { protect, optionalProtect, allowRoles } = require("../middleware/authMiddleware");
 const upload = require("../middleware/upload");
 const jobctrl = require("../controller/jobController");
 
@@ -12,6 +12,8 @@ const jobctrl = require("../controller/jobController");
 router.get("/", jobctrl.viewjob);
 
 router.get("/search", jobctrl.searchjob);
+
+router.post("/nearby", jobctrl.getNearbyJobs);
 
 // ======================
 // Employer Routes
@@ -58,6 +60,6 @@ router.delete(
 // Dynamic Route (LAST)
 // ======================
 
-router.get("/:id", jobctrl.singeljob);
+router.get("/:id", optionalProtect, jobctrl.singeljob);
 
 module.exports = router;

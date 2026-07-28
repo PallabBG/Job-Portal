@@ -3,6 +3,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const Resume = require("../models/Resume");
+const fs = require("fs");
+const path = require("path");
+const pdfParse = require("pdf-parse");
+const geocoder = require("../server/utils/geocoder");
 
 const sendOtpMail = async (email, otp) => {
   const transporter = nodemailer.createTransport({
@@ -444,16 +448,51 @@ exports.updateProfile = async (req, res) => {
     }
 
     if (user.role === "employer") {
-      if (companyProfile !== undefined)
-        user.companyProfile = companyProfile;
-    }
 
+      if (companyProfile !== undefined) {
+
+        user.companyProfile = companyProfile;
+
+        // Convert company location into coordinates
+        if (companyProfile.location) {
+
+          try {
+
+            const result = await geocoder.geocode(
+              companyProfile.location
+            );
+
+            if (result.length > 0) {
+
+              user.companyProfile.latitude = result[0].latitude;
+              user.companyProfile.longitude = result[0].longitude;
+
+            }
+
+          } catch (err) {
+
+            console.log("Geocoding Error:", err.message);
+
+          }
+
+        }
+
+      }
+
+    }
     if (user.role === "admin") {
       if (name !== undefined) user.name = name;
       if (phone !== undefined) user.phone = phone;
       if (location !== undefined) user.location = location;
       if (bio !== undefined) user.bio = bio;
     }
+
+    await user.save();
+
+    user.aiJobRecommendations = {
+      jobs: [],
+      generatedAt: null,
+    };
 
     await user.save();
 
@@ -489,11 +528,27 @@ exports.uploadResume = async (req, res) => {
       });
     }
 
+    // Absolute path of uploaded PDF
+    const pdfPath = path.join(
+      __dirname,
+      "../uploads/resumes",
+      req.file.filename
+    );
+
+    // Read PDF
+    const pdfBuffer = fs.readFileSync(pdfPath);
+
+    // Extract text
+    const pdfData = await pdfParse(pdfBuffer);
+
+    const extractedText = pdfData.text.trim();
+
     const resume = await Resume.findOneAndUpdate(
       { user: user._id },
       {
         user: user._id,
         resumeFile: req.file.filename,
+        extractedText,
       },
       {
         new: true,
@@ -501,18 +556,28 @@ exports.uploadResume = async (req, res) => {
       }
     );
 
+    user.aiJobRecommendations = {
+      jobs: [],
+      generatedAt: null,
+    };
+
+    await user.save();
+
     res.json({
+      success: true,
       message: "Resume uploaded successfully",
       resume: resume.resumeFile,
     });
   } catch (err) {
+    console.error("Resume Upload Error:", err);
+
     res.status(500).json({
+      success: false,
       message: err.message,
     });
   }
 };
 
-const path = require("path");
 
 exports.downloadResume = async (req, res) => {
   try {
@@ -607,31 +672,54 @@ exports.uploadProfileImage = async (req, res) => {
 };
 
 exports.getCandidateProfile = async (req, res) => {
-    try {
+  try {
 
-        const user = await User.findById(req.params.id)
-            .select("-password -otp -resetOtp -loginOtp");
+    const user = await User.findById(req.params.id)
+      .select("-password -otp -resetOtp -loginOtp");
 
-        if (!user) {
-            return res.status(404).json({
-                message: "Candidate not found",
-            });
-        }
-
-        const resume = await Resume.findOne({
-            user: user._id,
-        });
-
-        res.json({
-            user,
-            resume,
-        });
-
-    } catch (err) {
-        console.log(err);
-
-        res.status(500).json({
-            message: "Server Error",
-        });
+    if (!user) {
+      return res.status(404).json({
+        message: "Candidate not found",
+      });
     }
+
+    const resume = await Resume.findOne({
+      user: user._id,
+    });
+
+    res.json({
+      user,
+      resume,
+    });
+
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
+};
+
+
+exports.getPublicUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select(
+      "name role profileImage companyProfile"
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    res.json(user);
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
 };

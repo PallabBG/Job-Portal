@@ -4,16 +4,23 @@ const CareerPreferencesCard = ({
   setCareerPreferences,
 }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6">
-      <h2 className="text-xl font-semibold mb-5">
-        🎯 Career Preferences
-      </h2>
+    <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-3xl shadow-lg p-6 transition-colors duration-300">
+      {/* Header */}
+      <div className="mb-6">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          🎯 Career Preferences
+        </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          Tell recruiters about your preferred role and work preferences.
+        </p>
+      </div>
 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Preferred Role */}
+
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Preferred Job Role
           </label>
 
@@ -27,13 +34,19 @@ const CareerPreferencesCard = ({
                 preferredRole: e.target.value,
               })
             }
-            className="w-full border rounded-lg px-3 py-2"
+            className={`w-full rounded-xl border px-4 py-3 outline-none transition-all duration-300
+            ${
+              editing
+                ? "bg-white dark:bg-slate-900 border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                : "bg-gray-100 dark:bg-slate-700 border-gray-200 dark:border-slate-600 text-gray-700 dark:text-gray-300 cursor-not-allowed"
+            }`}
           />
         </div>
 
         {/* Preferred Location */}
+
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Preferred Location
           </label>
 
@@ -47,13 +60,19 @@ const CareerPreferencesCard = ({
                 preferredLocation: e.target.value,
               })
             }
-            className="w-full border rounded-lg px-3 py-2"
+            className={`w-full rounded-xl border px-4 py-3 outline-none transition-all duration-300
+            ${
+              editing
+                ? "bg-white dark:bg-slate-900 border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                : "bg-gray-100 dark:bg-slate-700 border-gray-200 dark:border-slate-600 text-gray-700 dark:text-gray-300 cursor-not-allowed"
+            }`}
           />
         </div>
 
         {/* Expected Salary */}
+
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Expected Salary
           </label>
 
@@ -68,13 +87,19 @@ const CareerPreferencesCard = ({
                 expectedSalary: e.target.value,
               })
             }
-            className="w-full border rounded-lg px-3 py-2"
+            className={`w-full rounded-xl border px-4 py-3 outline-none transition-all duration-300
+            ${
+              editing
+                ? "bg-white dark:bg-slate-900 border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                : "bg-gray-100 dark:bg-slate-700 border-gray-200 dark:border-slate-600 text-gray-700 dark:text-gray-300 cursor-not-allowed"
+            }`}
           />
         </div>
 
         {/* Work Mode */}
+
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Work Mode
           </label>
 
@@ -87,7 +112,12 @@ const CareerPreferencesCard = ({
                 workMode: e.target.value,
               })
             }
-            className="w-full border rounded-lg px-3 py-2"
+            className={`w-full rounded-xl border px-4 py-3 outline-none transition-all duration-300
+            ${
+              editing
+                ? "bg-white dark:bg-slate-900 border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                : "bg-gray-100 dark:bg-slate-700 border-gray-200 dark:border-slate-600 text-gray-700 dark:text-gray-300 cursor-not-allowed"
+            }`}
           >
             <option value="">Select</option>
             <option>On-site</option>
@@ -97,8 +127,9 @@ const CareerPreferencesCard = ({
         </div>
 
         {/* Employment Type */}
+
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Employment Type
           </label>
 
@@ -111,7 +142,12 @@ const CareerPreferencesCard = ({
                 employmentType: e.target.value,
               })
             }
-            className="w-full border rounded-lg px-3 py-2"
+            className={`w-full rounded-xl border px-4 py-3 outline-none transition-all duration-300
+            ${
+              editing
+                ? "bg-white dark:bg-slate-900 border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                : "bg-gray-100 dark:bg-slate-700 border-gray-200 dark:border-slate-600 text-gray-700 dark:text-gray-300 cursor-not-allowed"
+            }`}
           >
             <option value="">Select</option>
             <option>Full-Time</option>
@@ -123,8 +159,9 @@ const CareerPreferencesCard = ({
         </div>
 
         {/* Notice Period */}
+
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Notice Period
           </label>
 
@@ -137,7 +174,12 @@ const CareerPreferencesCard = ({
                 noticePeriod: e.target.value,
               })
             }
-            className="w-full border rounded-lg px-3 py-2"
+            className={`w-full rounded-xl border px-4 py-3 outline-none transition-all duration-300
+            ${
+              editing
+                ? "bg-white dark:bg-slate-900 border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                : "bg-gray-100 dark:bg-slate-700 border-gray-200 dark:border-slate-600 text-gray-700 dark:text-gray-300 cursor-not-allowed"
+            }`}
           >
             <option value="">Select</option>
             <option>Immediate</option>
@@ -147,11 +189,12 @@ const CareerPreferencesCard = ({
             <option>90 Days</option>
           </select>
         </div>
-
       </div>
 
-      <div className="mt-5">
-        <label className="flex items-center gap-2">
+      {/* Relocation */}
+
+      <div className="mt-6 border-t border-gray-200 dark:border-slate-700 pt-5">
+        <label className="flex items-center gap-3 text-gray-700 dark:text-gray-300 font-medium">
           <input
             type="checkbox"
             disabled={!editing}
@@ -162,10 +205,15 @@ const CareerPreferencesCard = ({
                 willingToRelocate: e.target.checked,
               })
             }
+            className="w-5 h-5 rounded text-indigo-600"
           />
-
           Willing to Relocate
         </label>
+
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 ml-8">
+          Recruiters may prioritize your profile for opportunities in other
+          cities.
+        </p>
       </div>
     </div>
   );

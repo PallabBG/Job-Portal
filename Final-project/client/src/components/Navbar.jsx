@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ProfileMenu from "./ProfileMenu";
+import { FaRobot } from "react-icons/fa";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -9,9 +10,8 @@ const Navbar = () => {
   const { user } = useAuth();
 
   return (
-    <div className="bg-white/90 backdrop-blur-md shadow sticky top-0 z-50">
+    <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow border-b border-gray-200 dark:border-slate-700 sticky top-0 z-50 transition-colors duration-300">
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-
         {/* Logo */}
         <h1
           onClick={() => navigate("/")}
@@ -21,42 +21,49 @@ const Navbar = () => {
         </h1>
 
         {/* Navigation */}
-        <div className="flex items-center gap-6 text-gray-700 font-medium">
-
+        <div className="flex items-center gap-6 text-gray-700 dark:text-gray-300 font-medium">
           {/* Public */}
-          <Link to="/" className="hover:text-blue-600 transition">
+          <Link
+            to="/"
+            className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >
             Home
           </Link>
 
-          <Link to="/about" className="hover:text-blue-600 transition">
+          <Link
+            to="/about"
+            className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >
             About
           </Link>
 
-          <Link to="/contact" className="hover:text-blue-600 transition">
+          <Link
+            to="/contact"
+            className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >
             Contact
           </Link>
 
+          {(user?.role === "jobseeker" || user?.role === "employer") && (
           <Link
             to="/chat"
-            className="hover:text-purple-600 transition"
+            className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
           >
             Chat
           </Link>
+          )}
 
           {/* Employer */}
           {user?.role === "employer" && (
             <>
               <Link
                 to="/employer-dashboard"
-                className="hover:text-blue-600 transition"
+                className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               >
                 Dashboard
               </Link>
 
-              <Link
-                to="/my-jobs"
-                className="hover:text-blue-600 transition"
-              >
+              <Link to="/my-jobs" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 My Jobs
               </Link>
 
@@ -74,14 +81,22 @@ const Navbar = () => {
             <>
               <Link
                 to="/jobseeker-dashboard"
-                className="hover:text-blue-600 transition"
+                className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               >
                 Dashboard
               </Link>
 
               <Link
+                to="/job-recommendations"
+                className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
+                <FaRobot />
+                AI Job Match
+              </Link>
+
+              <Link
                 to="/my-applications"
-                className="hover:text-blue-600 transition"
+                className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               >
                 My Applications
               </Link>
@@ -92,7 +107,7 @@ const Navbar = () => {
           {user?.role === "admin" && (
             <Link
               to="/admin-dashboard"
-              className="hover:text-blue-600 transition"
+              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
               Dashboard
             </Link>

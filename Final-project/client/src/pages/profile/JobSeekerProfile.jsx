@@ -617,8 +617,9 @@ const Profile = () => {
   // SocialLinks Functions
   // ====================
   return (
-    <div className="min-h-screen bg-gray-100 py-10">
+    <div className="min-h-screen bg-gray-100 dark:bg-slate-950 py-10 transition-colors duration-300">
       <div className="max-w-6xl mx-auto px-5">
+        
         {/* Profile Header */}
         <ProfileHeader
           editing={editing}

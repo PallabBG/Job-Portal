@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import API from "../api/jobApi.js";
-import JobList from "../components/Joblist.jsx";
+import JobList from "../components/Joblist";
 import { FaSearch, FaTimes, FaBriefcase, FaFilter } from "react-icons/fa";
 
 const Home = () => {
@@ -17,6 +17,9 @@ const Home = () => {
     sort: "newest",
   });
   const [loading, setLoading] = useState(false);
+  const [nearbyLoading, setNearbyLoading] = useState(false);
+  const [nearbyMode, setNearbyMode] = useState(false);
+  const [radius, setRadius] = useState(50);
 
   // Fetch all jobs
   const getJobs = async () => {
@@ -46,6 +49,9 @@ const Home = () => {
             keyword: search,
             category: filters.category,
             location: filters.location,
+            jobType: filters.jobType,
+            experience: filters.experience,
+            salary: filters.salary,
             sort: filters.sort,
           },
         });
@@ -89,8 +95,41 @@ const Home = () => {
     getJobs();
   };
 
+  const findNearbyJobs = () => {
+    if (!navigator.geolocation) {
+      return alert("Geolocation is not supported.");
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          setNearbyLoading(true);
+
+          const res = await API.post("/nearby", {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            radius,
+          });
+
+          setJobs(res.data);
+          setNearbyMode(true);
+        } catch (err) {
+          console.log(err);
+
+          alert("Unable to fetch nearby jobs.");
+        } finally {
+          setNearbyLoading(false);
+        }
+      },
+
+      () => {
+        alert("Please allow location permission.");
+      },
+    );
+  };
+
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-950 dark:to-slate-900 min-h-screen transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 py-10">
         {/* Hero Section */}
         <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white rounded-3xl p-10 mb-10 shadow-xl relative overflow-hidden">
@@ -111,12 +150,16 @@ const Home = () => {
         </div>
 
         {/* Stats */}
-        <div className="bg-white rounded-2xl shadow-md p-4 mb-6 flex justify-between items-center">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-md border border-gray-200 dark:border-slate-700 p-4 mb-6 flex justify-between items-center transition-colors duration-300">
           <div>
-            <h2 className="text-xl font-semibold text-gray-700">Jobs Found</h2>
+            <h2 className="text-xl font-semibold text-gray-700 dark:text-white">
+              Jobs Found
+            </h2>
 
             {search && (
-              <p className="text-sm text-gray-500">Results for "{search}"</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Results for "{search}"
+              </p>
             )}
           </div>
 
@@ -126,23 +169,22 @@ const Home = () => {
         </div>
 
         {/* Search */}
-        {/* Search */}
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="relative flex-1">
-            <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
 
             <input
               type="text"
               placeholder="Search jobs..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-12 py-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-12 pr-12 py-3 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300"
             />
 
             {search && (
               <button
                 onClick={clearSearch}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-red-500"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-red-500"
               >
                 <FaTimes />
               </button>
@@ -150,16 +192,42 @@ const Home = () => {
           </div>
 
           <button
+            onClick={findNearbyJobs}
+            disabled={nearbyLoading}
+            className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 disabled:opacity-60 transition"
+          >
+            {nearbyLoading ? "Finding..." : "📍 Use My Location"}
+          </button>
+          <select
+            value={radius}
+            onChange={(e) => setRadius(Number(e.target.value))}
+            className="px-4 py-3 rounded-xl border dark:text-white dark:bg-slate-900 dark:border-slate-700"
+          >
+            <option value={10}>10 km</option>
+            <option value={25}>25 km</option>
+            <option value={50}>50 km</option>
+            <option value={100}>100 km</option>
+            <option value={250}>250 km</option>
+          </select>
+
+          <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-white border rounded-xl shadow hover:bg-blue-50 transition"
+            className="flex items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 text-gray-800 dark:text-white rounded-xl shadow hover:bg-blue-50 dark:hover:bg-slate-700 transition-colors duration-300"
           >
             <FaFilter />
             Filter
           </button>
         </div>
+        {nearbyMode && (
+          <p className="text-green-600 dark:text-green-400 font-medium mb-5">
+            📍 Showing jobs within {radius} km
+          </p>
+        )}
         {showFilters && (
-          <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 animate-fadeIn">
-            <h2 className="text-xl font-bold mb-6">Advanced Filters</h2>
+          <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl shadow-lg p-6 mb-8 animate-fadeIn transition-colors duration-300">
+            <h2 className="text-xl font-bold mb-6 text-gray-900 dark:text-white">
+              Advanced Filters
+            </h2>
 
             <div className="grid md:grid-cols-3 gap-5">
               {/* Category */}
@@ -172,7 +240,7 @@ const Home = () => {
                     category: e.target.value,
                   })
                 }
-                className="border rounded-xl p-3"
+                className="border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-white rounded-xl p-3 transition-colors duration-300"
               >
                 <option value="">Category</option>
                 <option>Software Development</option>
@@ -195,7 +263,7 @@ const Home = () => {
                     location: e.target.value,
                   })
                 }
-                className="border rounded-xl p-3"
+                className="border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-white rounded-xl p-3 transition-colors duration-300"
               />
 
               {/* Job Type */}
@@ -208,7 +276,7 @@ const Home = () => {
                     jobType: e.target.value,
                   })
                 }
-                className="border rounded-xl p-3"
+                className="border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-white rounded-xl p-3 transition-colors duration-300"
               >
                 <option value="">Job Type</option>
                 <option>Full-Time</option>
@@ -228,13 +296,13 @@ const Home = () => {
                     experience: e.target.value,
                   })
                 }
-                className="border rounded-xl p-3"
+                className="border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-white rounded-xl p-3 transition-colors duration-300"
               >
                 <option value="">Experience</option>
                 <option>Fresher</option>
-                <option>1-2 Years</option>
-                <option>3-5 Years</option>
-                <option>5+ Years</option>
+                <option>Junior</option>
+                <option>Mid-Level</option>
+                <option>Senior</option>
               </select>
 
               {/* Salary */}
@@ -247,7 +315,7 @@ const Home = () => {
                     salary: e.target.value,
                   })
                 }
-                className="border rounded-xl p-3"
+                className="border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-white rounded-xl p-3 transition-colors duration-300"
               >
                 <option value="">Salary</option>
                 <option>0-3 LPA</option>
@@ -266,7 +334,7 @@ const Home = () => {
                     sort: e.target.value,
                   })
                 }
-                className="border rounded-xl p-3"
+                className="border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-white rounded-xl p-3 transition-colors duration-300"
               >
                 <option value="newest">Newest</option>
                 <option value="oldest">Oldest</option>
@@ -289,7 +357,7 @@ const Home = () => {
                     sort: "newest",
                   });
                 }}
-                className="px-5 py-2 rounded-xl bg-gray-200 hover:bg-gray-300"
+                className="px-5 py-2 rounded-xl bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors duration-300"
               >
                 Clear
               </button>
@@ -311,10 +379,10 @@ const Home = () => {
           </div>
         ) : jobs.length === 0 ? (
           <div className="text-center py-20">
-            <h3 className="text-2xl font-semibold text-gray-600">
+            <h3 className="text-2xl font-semibold text-gray-600 dark:text-gray-300">
               No matching jobs found
             </h3>
-            <p className="text-gray-500 mt-2">
+            <p className="text-gray-500 dark:text-gray-400 mt-2">
               Try searching with a different keyword.
             </p>
           </div>

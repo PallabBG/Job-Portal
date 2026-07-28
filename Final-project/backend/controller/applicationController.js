@@ -118,7 +118,10 @@ exports.getMyApplications = async (req, res) => {
             applicant: req.user.id,
         })
             .populate("job")
-            .populate("employer", "name email")
+            .populate(
+                "employer",
+                "name email profileImage companyProfile"
+            )
             .sort({ createdAt: -1 });
 
         res.status(200).json(applications);

@@ -40,6 +40,8 @@ app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/messages", require("./routes/messageRoutes"));
 app.use("/api/chatbot", require("./routes/chatboatRoutes"));
 
+app.use("/api/ai", require("./routes/aiRoutes"));
+
 app.use("/api/applications", applicationRoutes);
 
 

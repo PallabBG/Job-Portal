@@ -3,6 +3,7 @@ import { User, Bell, Settings, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useNotification } from "../context/NotificationContext";
+import ThemeToggle from "./ThemeToggle";
 
 const ProfileMenu = () => {
   const navigate = useNavigate();
@@ -70,12 +71,12 @@ const ProfileMenu = () => {
       </button>
 
       {unreadCount > 0 && (
-        <span className="absolute bottom-0 left-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+        <span className="absolute bottom-0 left-0 w-3 h-3 bg-green-500 border-2 border-white dark:border-slate-800 rounded-full"></span>
       )}
 
       {open && (
-        <div className="absolute right-0 mt-3 w-72 bg-white rounded-2xl shadow-xl border overflow-hidden z-50">
-          <div className="p-5 border-b">
+        <div className="absolute right-0 mt-3 w-72 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl shadow-xl border overflow-hidden z-50">
+          <div className="p-5 border-b border-gray-200 dark:border-slate-700">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full overflow-hidden bg-blue-600 flex items-center justify-center">
                 {avatar ? (
@@ -90,8 +91,8 @@ const ProfileMenu = () => {
               </div>
 
               <div>
-                <h2 className="font-semibold">{user?.name}</h2>
-                <p className="text-sm text-gray-500 capitalize">
+                <h2 className="font-semibold text-gray-900 dark:text-white">{user?.name}</h2>
+                <p className="text-sm text-gray-500 dark:text-gray-400 capitalize">
                   {user?.role}
                 </p>
               </div>
@@ -103,7 +104,7 @@ const ProfileMenu = () => {
               setOpen(false);
               navigate("/profile");
             }}
-            className="w-full flex items-center gap-3 px-5 py-3 hover:bg-gray-100"
+            className="w-full flex items-center gap-3 px-5 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
           >
             <User size={18} />
             My Profile
@@ -114,7 +115,7 @@ const ProfileMenu = () => {
               setOpen(false);
               navigate("/notifications");
             }}
-            className="w-full flex items-center justify-between px-5 py-3 hover:bg-gray-100"
+            className="w-full flex items-center justify-between px-5 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
           >
             <div className="flex items-center gap-3">
               <Bell size={18} />
@@ -131,15 +132,12 @@ const ProfileMenu = () => {
               </div>
             )}
           </button>
-
-          <button className="w-full flex items-center gap-3 px-5 py-3 hover:bg-gray-100">
-            <Settings size={18} />
-            Settings
-          </button>
+          
+          <ThemeToggle />
 
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-5 py-3 text-red-600 hover:bg-red-50"
+            className="w-full flex items-center gap-3 px-5 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
           >
             <LogOut size={18} />
             Logout

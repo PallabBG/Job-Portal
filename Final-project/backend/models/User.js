@@ -264,7 +264,7 @@ const userSchema = new mongoose.Schema(
         default: "",
       },
     },
-    
+
     companyProfile: {
       companyName: {
         type: String,
@@ -294,6 +294,16 @@ const userSchema = new mongoose.Schema(
         type: String,
         default: "",
       },
+
+      latitude: {
+        type: Number,
+        default: null,
+      },
+
+      longitude: {
+        type: Number,
+        default: null,
+      },
       about: {
         type: String,
         default: "",
@@ -310,6 +320,29 @@ const userSchema = new mongoose.Schema(
         type: String,
         default: "",
       },
+    },
+
+    aiJobRecommendations: {
+      jobs: [
+        {
+          jobId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Job",
+          },
+
+          matchScore: Number,
+
+          matchedSkills: [String],
+
+          missingSkills: [String],
+
+          reasons: [String],
+
+          aiSummary: String,
+        },
+      ],
+
+      generatedAt: Date,
     },
   },
 

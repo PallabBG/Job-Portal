@@ -112,7 +112,7 @@ const AdminProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10">
+    <div className="min-h-screen bg-gray-100 dark:bg-slate-950 transition-colors duration-300 py-10">
       <div className="max-w-5xl mx-auto px-5">
 
         <ProfileHeader

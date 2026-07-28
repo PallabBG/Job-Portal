@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 const Chatbox = ({
   socket,
   currentUser,
+  receiver,
   receiverId,
-  receiverName,
   oldMessages,
 }) => {
   const [message, setMessage] = useState("");
@@ -60,27 +60,73 @@ const Chatbox = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-5">
-      <h2 className="text-2xl font-bold mb-5">
-        Chat with {receiverName}
-      </h2>
+    <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-3xl shadow-xl overflow-hidden transition-colors duration-300 h-[calc(100vh-150px)] flex flex-col">
+      <div className="flex items-center gap-4 px-6 py-5 border-b border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900">
+        {receiver ? (
+          <>
+            <img
+              src={
+                receiver?.role === "employer"
+                  ? receiver?.companyProfile?.companyLogo
+                    ? `http://localhost:5500${receiver.companyProfile.companyLogo}`
+                    : "/company-placeholder.png"
+                  : receiver?.profileImage
+                    ? `http://localhost:5500${receiver.profileImage}`
+                    : "/default-avatar.png"
+              }
+              alt=""
+              className="w-14 h-14 rounded-2xl object-cover border border-gray-200 dark:border-slate-600 bg-white"
+              onError={(e) => {
+                e.currentTarget.src =
+                  receiver?.role === "employer"
+                    ? "/company-placeholder.png"
+                    : "/default-avatar.png";
+              }}
+            />
 
-      <div className="h-[500px] overflow-y-auto border rounded-lg p-4 bg-gray-50">
+            <div className="flex-1">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                {receiver?.role === "employer"
+                  ? receiver?.companyProfile?.companyName || receiver?.name
+                  : receiver?.name || "Loading..."}
+              </h2>
+
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {receiver?.role === "employer"
+                  ? receiver?.companyProfile?.industry || "Employer"
+                  : "Job Seeker"}
+              </p>
+            </div>
+          </>
+        ) : (
+          <div className="h-14 flex items-center text-gray-500 dark:text-gray-400">
+            Loading profile...
+          </div>
+        )}
+      </div>
+
+      <div className="flex-1 overflow-y-auto bg-gray-50 dark:bg-slate-900 px-8 py-6">
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`mb-4 flex ${msg.senderId === currentUser._id
-                ? "justify-end"
-                : "justify-start"
-              }`}
+            className={`mb-4 flex ${
+              msg.senderId === currentUser._id ? "justify-end" : "justify-start"
+            }`}
           >
             <div
-              className={`px-4 py-3 rounded-2xl max-w-[70%] ${msg.senderId === currentUser._id
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-300"
-                }`}
+              className={`px-5 py-3 rounded-3xl shadow-md max-w-[75%] break-words ${
+                msg.senderId === currentUser._id
+                  ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white"
+                  : "bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-white"
+              }`}
             >
-              <p className="text-sm font-bold mb-1">
+              <p
+                className={`text-xs font-semibold mb-2 ${
+                  msg.senderId === currentUser._id
+                    ? "text-blue-100"
+                    : "text-gray-500 dark:text-gray-400"
+                }`}
+              >
                 {msg.senderName}
               </p>
 
@@ -92,20 +138,23 @@ const Chatbox = ({
         <div ref={bottomRef}></div>
       </div>
 
-      <div className="flex gap-3 mt-5">
+      <div className="flex gap-3 p-5 border-t border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800">
         <input
           type="text"
           placeholder="Type message..."
           value={message}
-          onChange={(e) =>
-            setMessage(e.target.value)
-          }
-          className="flex-1 border p-3 rounded-lg"
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              sendMessage();
+            }
+          }}
+          className="flex-1 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
         />
 
         <button
           onClick={sendMessage}
-          className="bg-blue-600 text-white px-6 rounded-lg"
+          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 rounded-xl transition-all duration-300"
         >
           Send
         </button>

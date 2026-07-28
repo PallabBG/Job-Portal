@@ -4,8 +4,34 @@ exports.protect = (req, res, next) => {
   try {
     let token = req.headers.authorization;
 
+
     if (!token) {
       return res.status(401).json({ message: "Please login first" });
+    }
+
+    if (token.startsWith("Bearer ")) {
+      token = token.split(" ")[1];
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    console.log("JWT Decoded:", decoded);
+
+    req.user = decoded;
+
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: "Invalid or expired token" });
+  }
+};
+
+exports.optionalProtect = (req, res, next) => {
+  try {
+    let token = req.headers.authorization;
+
+    // No token? Continue as a guest.
+    if (!token) {
+      return next();
     }
 
     if (token.startsWith("Bearer ")) {
@@ -18,7 +44,8 @@ exports.protect = (req, res, next) => {
 
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Invalid or expired token" });
+    // Invalid/expired token? Ignore it and continue as a guest.
+    next();
   }
 };
 

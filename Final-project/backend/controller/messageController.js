@@ -23,3 +23,45 @@ exports.getmessages = async(req,res)=>{
         res.status(500).json({ message: "Internal Server Error" }); // Add this line
     }
 }
+
+const User = require("../models/User");
+
+exports.getConversations = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const messages = await Message.find({
+      $or: [
+        { senderId: userId },
+        { receiverId: userId },
+      ],
+    }).sort({ updatedAt: -1 });
+
+    const uniqueUsers = new Map();
+
+    for (const msg of messages) {
+      const otherUserId =
+        msg.senderId === userId
+          ? msg.receiverId
+          : msg.senderId;
+
+      if (!uniqueUsers.has(otherUserId)) {
+        const user = await User.findById(otherUserId).select(
+          "name profileImage role companyProfile"
+        );
+
+        if (user) {
+          uniqueUsers.set(otherUserId, user);
+        }
+      }
+    }
+
+    res.json([...uniqueUsers.values()]);
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      message: "Failed to fetch conversations",
+    });
+  }
+};
