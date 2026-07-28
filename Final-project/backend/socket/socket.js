@@ -47,6 +47,13 @@ const sockethandeler = (io) => {
     });
 
     // ==========================
+    // Messages Read
+    // ==========================
+    socket.on("messagesRead", () => {
+      socket.emit("messagesUpdated");
+    });
+
+    // ==========================
     // Send Chat Message
     // ==========================
     socket.on("sendMessage", async (data) => {

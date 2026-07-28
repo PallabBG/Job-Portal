@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-import Home from "./pages/Home";
+import Jobs from "./pages/Jobs";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Feature from "./pages/Feature";
@@ -34,6 +34,8 @@ import Notifications from "./pages/Notifications";
 import JobRecommendations from "./pages/JobRecommendations";
 import InterviewQuestions from "./pages/InterviewQuestions";
 import ConversationPage from "./pages/ConversationPage";
+import Home from "./pages/Home";
+import UserManagement from "./pages/UserManagement";
 
 const App = () => {
   return (
@@ -43,7 +45,7 @@ const App = () => {
 
         <main className="flex-1">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Jobs />} />
 
             <Route
               path="/chat"
@@ -83,6 +85,7 @@ const App = () => {
             <Route path="/job/:id" element={<SingleJob />} />
 
             <Route path="/about" element={<About />} />
+            <Route path="/Home" element={<Home />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/f" element={<Feature />} />
 
@@ -91,6 +94,14 @@ const App = () => {
               element={
                 <ProtectedRoute roles={["admin"]}>
                   <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/user-management"
+              element={
+                <ProtectedRoute roles={["admin","employer"]}>
+                  <UserManagement />
                 </ProtectedRoute>
               }
             />

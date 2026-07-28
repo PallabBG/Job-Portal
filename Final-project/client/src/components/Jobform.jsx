@@ -111,7 +111,7 @@ const JobForm = ({ formData, handleChange, handleSubmit, btnText }) => {
           name="deadline"
           value={formData.deadline ?? ""}
           onChange={handleChange}
-          className="w-full border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300"
+          className="w-full border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300 dark:[color-scheme:dark]"
         />
       </div>
 

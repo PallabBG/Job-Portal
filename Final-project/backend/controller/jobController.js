@@ -175,12 +175,18 @@ exports.singeljob = async (req, res) => {
           reasons,
         } = calculateJobMatch(user, singleJob);
 
+        const application = await Application.findOne({
+          job: singleJob._id,
+          applicant: user._id,
+        });
+
         const jobData = singleJob.toObject();
 
         jobData.matchScore = matchScore;
         jobData.matchedSkills = matchedSkills;
         jobData.missingSkills = missingSkills;
         jobData.reasons = reasons;
+        jobData.hasApplied = !!application;
 
         return res.status(200).json(jobData);
       }
@@ -224,6 +230,16 @@ exports.updatejob = async (req, res) => {
         message: "Job not found",
       });
     }
+
+    console.log("Logged-in User ID:", req.user.id);
+    console.log("Logged-in Role:", req.user.role);
+
+    console.log("Job Employer:", oldjob.employer.toString());
+
+    console.log(
+      "Match:",
+      oldjob.employer.toString() === req.user.id
+    );
 
     if (
       req.user.role !== "admin" &&
@@ -460,11 +476,80 @@ exports.getEmployerDashboard = async (req, res) => {
       job: { $in: jobIds },
     });
 
-    console.log("Applications:", applicationsReceived);
+    const shortlistedCount = await Application.countDocuments({
+      job: { $in: jobIds },
+      status: "Shortlisted",
+    });
+
+    // Weekly Activity
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+    sevenDaysAgo.setHours(0, 0, 0, 0);
+
+    const recentWeekApps = await Application.find({
+      job: { $in: jobIds },
+      createdAt: { $gte: sevenDaysAgo }
+    });
+
+    const weeklyActivity = Array(7).fill(0);
+
+    // Create an array mapping from past days to today
+    // index 0: 6 days ago, index 1: 5 days ago, ... index 6: today
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    recentWeekApps.forEach(app => {
+      const appDate = new Date(app.createdAt);
+      appDate.setHours(0, 0, 0, 0);
+
+      const diffTime = Math.abs(today - appDate);
+      const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+      const index = 6 - diffDays;
+      if (index >= 0 && index < 7) {
+        weeklyActivity[index]++;
+      }
+    });
+
+    // Recent Applications
+    const recentApps = await Application.find({ job: { $in: jobIds } })
+      .sort({ createdAt: -1 })
+      .limit(4)
+      .populate("applicant", "name profileImage skills location careerPreferences")
+      .populate({
+        path: "job",
+        select: "title skills employer",
+        populate: {
+          path: "employer",
+          select: "companyProfile.location"
+        }
+      });
+
+    const formattedRecentApps = recentApps.map(app => {
+      let matchScore = "N/A";
+      if (app.applicant && app.job) {
+        const { matchScore: score } = calculateJobMatch(app.applicant, app.job);
+        matchScore = `${score}%`;
+      }
+
+      return {
+        id: app._id,
+        jobId: app.job?._id,
+        name: app.applicant?.name || "Unknown",
+        profileImage: app.applicant?.profileImage,
+        role: app.job?.title || "Unknown Job",
+        date: app.createdAt,
+        status: app.status || "New",
+        match: matchScore
+      };
+    });
 
     res.json({
       postedJobs,
       applicationsReceived,
+      shortlistedCount,
+      weeklyActivity,
+      recentApplications: formattedRecentApps
     });
   } catch (err) {
     console.log(err);

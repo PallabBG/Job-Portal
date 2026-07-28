@@ -6,14 +6,17 @@ import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./context/AuthContext";
 import { NotificationProvider } from "./context/NotificationContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { MessageProvider } from "./context/MessageContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
       <NotificationProvider>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <MessageProvider>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
+        </MessageProvider>
       </NotificationProvider>
     </AuthProvider>
   </StrictMode>,
