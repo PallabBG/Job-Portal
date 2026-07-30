@@ -54,6 +54,18 @@ export const AuthProvider = ({ children }) => {
     if (user?._id) {
       socket.emit("join", user._id);
       console.log("Socket Joined:", user._id);
+      
+      const handleSuspension = () => {
+        alert("Your account has been suspended by an administrator.");
+        logout();
+        window.location.href = "/login";
+      };
+
+      socket.on("accountSuspended", handleSuspension);
+
+      return () => {
+        socket.off("accountSuspended", handleSuspension);
+      };
     }
   }, [user]);
 

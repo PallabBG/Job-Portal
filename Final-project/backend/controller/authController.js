@@ -131,6 +131,10 @@ exports.loginUser = async (req, res) => {
       return res.status(400).json({ message: "Please verify OTP first" });
     }
 
+    if (user.isSuspended) {
+      return res.status(403).json({ message: "Your account is suspended." });
+    }
+
     const match = await bcrypt.compare(password, user.password);
 
     if (!match) {
@@ -233,6 +237,10 @@ exports.sendLoginOtp = async (req, res) => {
       });
     }
 
+    if (user.isSuspended) {
+      return res.status(403).json({ message: "Your account is suspended." });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
@@ -278,6 +286,10 @@ exports.verifyLoginOtp = async (req, res) => {
       return res.status(404).json({
         message: "User not found"
       });
+    }
+
+    if (user.isSuspended) {
+      return res.status(403).json({ message: "Your account is suspended." });
     }
 
     if (

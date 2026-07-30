@@ -41,6 +41,11 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
 
+    isSuspended: {
+      type: Boolean,
+      default: false,
+    },
+
     resetOtp: {
       type: String,
       default: null,

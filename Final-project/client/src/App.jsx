@@ -36,6 +36,7 @@ import InterviewQuestions from "./pages/InterviewQuestions";
 import ConversationPage from "./pages/ConversationPage";
 import Home from "./pages/Home";
 import UserManagement from "./pages/UserManagement";
+import ApplicationManagement from "./pages/ApplicationManagement";
 
 const App = () => {
   return (
@@ -102,6 +103,14 @@ const App = () => {
               element={
                 <ProtectedRoute roles={["admin","employer"]}>
                   <UserManagement />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/application-management"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <ApplicationManagement />
                 </ProtectedRoute>
               }
             />

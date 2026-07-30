@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UserManagement = () => {
   const [activeTab, setActiveTab] = useState('jobseeker');
@@ -24,6 +25,7 @@ const UserManagement = () => {
   const itemsPerPage = 6;
   const [activeDropdown, setActiveDropdown] = useState(null);
   const { user } = useAuth();
+  const navigate = useNavigate();
   
   const [usersData, setUsersData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -46,6 +48,53 @@ const UserManagement = () => {
     };
     fetchUsers();
   }, []);
+
+  const handleDeleteUser = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:5500/api/admin/users/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setUsersData(usersData.filter(u => u._id !== id));
+      setActiveDropdown(null);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleSuspendUser = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.put(`http://localhost:5500/api/admin/users/${id}/suspend`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setUsersData(usersData.map(u => u._id === id ? res.data.user : u));
+      setActiveDropdown(null);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleVerifyUser = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.put(`http://localhost:5500/api/admin/users/${id}/verify`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setUsersData(usersData.map(u => u._id === id ? res.data.user : u));
+      setActiveDropdown(null);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleViewProfile = (id) => {
+    navigate(`/candidate/${id}`);
+  };
+
+  const handleChatUser = (id) => {
+    navigate(`/chat/${id}`);
+  };
 
   // Filter Users
   const filteredUsers = useMemo(() => {
@@ -152,10 +201,10 @@ const UserManagement = () => {
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
                 {currentUsers.length > 0 ? (
-                  currentUsers.map((user) => {
-                    const userStatus = user.isVerified ? 'Active' : 'Pending';
+                  currentUsers.map((u) => {
+                    const userStatus = u.isSuspended ? 'Suspended' : (u.isVerified ? 'Active' : 'Pending');
                     return (
-                    <tr key={user._id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+                    <tr key={u._id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
 
                       {/* Avatar & Name */}
                       <td className="py-4 px-6">
@@ -164,23 +213,23 @@ const UserManagement = () => {
                               ? 'bg-purple-50 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400'
                               : 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'
                             }`}>
-                            {user.name.charAt(0)}
+                            {u.name.charAt(0)}
                           </div>
                           <div>
-                            <span className="font-bold text-slate-900 dark:text-white block group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{user.name}</span>
-                            <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">ID: #{user._id.slice(-6).toUpperCase()}</span>
+                            <span className="font-bold text-slate-900 dark:text-white block group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{u.name}</span>
+                            <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">ID: #{u._id.slice(-6).toUpperCase()}</span>
                           </div>
                         </div>
                       </td>
 
                       {/* Email */}
                       <td className="py-4 px-6">
-                        <span className="text-slate-600 dark:text-slate-300 font-medium">{user.email}</span>
+                        <span className="text-slate-600 dark:text-slate-300 font-medium">{u.email}</span>
                       </td>
 
                       {/* Joined Date */}
                       <td className="py-4 px-6">
-                        <span className="text-slate-600 dark:text-slate-400 text-sm font-medium">{new Date(user.createdAt).toLocaleDateString()}</span>
+                        <span className="text-slate-600 dark:text-slate-400 text-sm font-medium">{new Date(u.createdAt).toLocaleDateString()}</span>
                       </td>
 
                       {/* Status */}
@@ -191,38 +240,47 @@ const UserManagement = () => {
                       {/* Actions */}
                       <td className="py-4 px-6 text-right relative">
                         <button
-                          onClick={() => toggleDropdown(user._id)}
+                          onClick={() => toggleDropdown(u._id)}
                           className="p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-colors ml-auto"
                         >
                           <MoreVertical className="w-5 h-5" />
                         </button>
 
                         {/* Dropdown Menu */}
-                        {activeDropdown === user._id && (
+                        {activeDropdown === u._id && (
                           <>
                             <div className="fixed inset-0 z-10" onClick={() => setActiveDropdown(null)}></div>
                             <div className="absolute right-8 top-12 w-48 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 z-20 py-2 overflow-hidden animate-fade-in-up">
-                              <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                              
+                              <button onClick={() => handleViewProfile(u._id)} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
                                 <Eye className="w-4 h-4 text-blue-500" /> View Profile
                               </button>
 
-                              {userStatus !== 'Active' && (
-                                <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                                  <CheckCircle className="w-4 h-4 text-emerald-500" /> Verify User
-                                </button>
+                              {user?.role === 'admin' && (
+                                <>
+                                  {userStatus === 'Pending' && (
+                                    <button onClick={() => handleVerifyUser(u._id)} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                      <CheckCircle className="w-4 h-4 text-emerald-500" /> Verify User
+                                    </button>
+                                  )}
+    
+                                  <button onClick={() => handleSuspendUser(u._id)} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-amber-600 dark:text-amber-500 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                    <ShieldAlert className="w-4 h-4" /> {u.isSuspended ? 'Unsuspend Account' : 'Suspend Account'}
+                                  </button>
+    
+                                  <div className="h-px bg-slate-100 dark:bg-slate-700 my-1"></div>
+    
+                                  <button onClick={() => handleDeleteUser(u._id)} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                                    <Trash2 className="w-4 h-4" /> Delete User
+                                  </button>
+                                </>
                               )}
 
-                              {userStatus === 'Active' && (
-                                <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-amber-600 dark:text-amber-500 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                                  <ShieldAlert className="w-4 h-4" /> Suspend Account
+                              {user?.role === 'employer' && (
+                                <button onClick={() => handleChatUser(u._id)} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-blue-600 dark:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+                                  <UserCheck className="w-4 h-4" /> Chat with user
                                 </button>
                               )}
-
-                              <div className="h-px bg-slate-100 dark:bg-slate-700 my-1"></div>
-
-                              <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-                                <Trash2 className="w-4 h-4" /> Delete User
-                              </button>
                             </div>
                           </>
                         )}

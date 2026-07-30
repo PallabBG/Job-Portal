@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ProfileMenu from "./ProfileMenu";
 import { FaRobot } from "react-icons/fa";
+import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import socket from "../socket";
@@ -12,6 +13,7 @@ const Navbar = () => {
   const token = localStorage.getItem("token");
   const { user } = useAuth();
   const [unreadChatCount, setUnreadChatCount] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!user || !token) return;
@@ -54,8 +56,8 @@ const Navbar = () => {
           Job Portal
         </h1>
 
-        {/* Navigation */}
-        <div className="flex items-center gap-6 text-gray-700 dark:text-gray-300 font-medium">
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-6 text-gray-700 dark:text-gray-300 font-medium">
           {/* Public */}
           {!token && (
             <Link
@@ -168,6 +170,13 @@ const Navbar = () => {
               >
                 Users
               </Link>
+              
+              <Link
+                to="/application-management"
+                className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
+                Applications
+              </Link>
             </>
           )}
           {user?.role === "employer" && (
@@ -202,7 +211,72 @@ const Navbar = () => {
             <ProfileMenu />
           )}
         </div>
+
+        {/* Mobile Menu Toggle */}
+        <div className="md:hidden flex items-center">
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+            className="text-gray-700 dark:text-gray-300 focus:outline-none p-2"
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Dropdown Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 shadow-lg absolute w-full left-0 top-full flex flex-col px-6 py-4 gap-4 text-gray-700 dark:text-gray-300 font-medium">
+          {!token && (
+            <Link to="/Home" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-purple-600 transition-colors">Home</Link>
+          )}
+          <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 transition-colors">Jobs</Link>
+          <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 transition-colors">About</Link>
+          <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 transition-colors">Contact</Link>
+
+          {(user?.role === "jobseeker" || user?.role === "employer") && (
+            <Link to="/chat" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-purple-600 transition-colors flex items-center">
+              Chat {unreadChatCount > 0 && <span className="ml-2 w-2 h-2 rounded-full bg-green-500"></span>}
+            </Link>
+          )}
+
+          {user?.role === "employer" && (
+            <>
+              <Link to="/employer-dashboard" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 transition-colors">Dashboard</Link>
+              <Link to="/my-jobs" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 transition-colors">My Jobs</Link>
+              <Link to="/add-job" onClick={() => setIsMobileMenuOpen(false)} className="text-blue-600 font-bold">Add Job</Link>
+              <Link to="/user-management" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 transition-colors">Candidates</Link>
+            </>
+          )}
+
+          {user?.role === "jobseeker" && (
+            <>
+              <Link to="/jobseeker-dashboard" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 transition-colors">Dashboard</Link>
+              <Link to="/job-recommendations" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 transition-colors flex items-center gap-2"><FaRobot /> AI Job Match</Link>
+              <Link to="/my-applications" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 transition-colors">My Applications</Link>
+            </>
+          )}
+
+          {user?.role === "admin" && (
+            <>
+              <Link to="/admin-dashboard" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 transition-colors">Dashboard</Link>
+              <Link to="/user-management" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 transition-colors">Users</Link>
+              <Link to="/application-management" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 transition-colors">Applications</Link>
+            </>
+          )}
+
+          {!token ? (
+            <div className="flex flex-col gap-3 mt-2 pt-4 border-t border-gray-200 dark:border-slate-700">
+              <Link to="/register" onClick={() => setIsMobileMenuOpen(false)} className="bg-blue-600 text-white px-4 py-2 rounded-lg text-center font-semibold">Register</Link>
+              <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="border border-blue-600 text-blue-600 px-4 py-2 rounded-lg text-center font-semibold">Login</Link>
+            </div>
+          ) : (
+             <div className="mt-2 pt-4 border-t border-gray-200 dark:border-slate-700 pb-2">
+               {/* Mobile Profile Menu replacement - simplified */}
+               <Link to="/profile" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 hover:text-blue-600 font-bold">My Profile</Link>
+             </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
