@@ -65,6 +65,7 @@ exports.registerUser = async (req, res) => {
     }
 
     await sendOtpMail(email, otp);
+    console.log(`\n\n🔥 [RENDER BYPASS] REGISTER OTP for ${email} is: ${otp} 🔥\n\n`);
 
     res.status(200).json({
       message: "OTP sent successfully. Please verify your email.",
@@ -189,6 +190,7 @@ exports.sendResetOtp = async (req, res) => {
 
     // ✅ SEND EMAIL (same as register)
     await sendOtpMail(email, otp);
+    console.log(`\n\n🔥 [RENDER BYPASS] RESET PASSWORD OTP for ${email} is: ${otp} 🔥\n\n`);
 
     res.json({ message: "OTP sent successfully to your email" });
 
@@ -257,6 +259,7 @@ exports.sendLoginOtp = async (req, res) => {
     await user.save();
 
     await sendOtpMail(email, otp);
+    console.log(`\n\n🔥 [RENDER BYPASS] LOGIN OTP for ${email} is: ${otp} 🔥\n\n`);
 
     res.json({
       message: "OTP sent successfully."

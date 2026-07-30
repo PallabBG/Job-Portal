@@ -29,7 +29,7 @@ const ApplicationManagement = () => {
     const fetchApplications = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/applications`, {
+        const res = await axios.get(`https://job-portal-v3nf.onrender.com/api/admin/applications`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -47,7 +47,7 @@ const ApplicationManagement = () => {
   const handleDeleteApplication = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/admin/applications/${id}`, {
+      await axios.delete(`https://job-portal-v3nf.onrender.com/api/admin/applications/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setApplicationsData(applicationsData.filter(app => app._id !== id));
@@ -60,7 +60,7 @@ const ApplicationManagement = () => {
   const handleUpdateStatus = async (id, status) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.patch(`${import.meta.env.VITE_API_URL}/api/applications/${id}/status`, { status }, {
+      const res = await axios.patch(`https://job-portal-v3nf.onrender.com/api/applications/${id}/status`, { status }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setApplicationsData(applicationsData.map(app => app._id === id ? { ...app, status: res.data.application.status, statusUpdatedAt: res.data.application.statusUpdatedAt } : app));

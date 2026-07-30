@@ -192,7 +192,7 @@ const Profile = () => {
 
   const loadProfile = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
+      const res = await axios.get(`https://job-portal-v3nf.onrender.com/api/auth/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -254,7 +254,7 @@ const Profile = () => {
 
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_API_URL}/api/auth/profile`,
+        `https://job-portal-v3nf.onrender.com/api/auth/profile`,
         {
           name: form.name,
           phone: form.phone,
@@ -300,7 +300,7 @@ const Profile = () => {
       formData.append("resume", selectedResume);
 
       const res = await axios.put(
-        `${import.meta.env.VITE_API_URL}/api/auth/upload-resume`,
+        `https://job-portal-v3nf.onrender.com/api/auth/upload-resume`,
         formData,
         {
           headers: {
@@ -324,7 +324,7 @@ const Profile = () => {
   const handleDownloadResume = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/auth/download-resume`,
+        `https://job-portal-v3nf.onrender.com/api/auth/download-resume`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -42,7 +42,7 @@ const EmployerProfile = () => {
 
   const loadProfile = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
+      const res = await axios.get(`https://job-portal-v3nf.onrender.com/api/auth/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -80,7 +80,7 @@ const EmployerProfile = () => {
 
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_API_URL}/api/auth/profile`,
+        `https://job-portal-v3nf.onrender.com/api/auth/profile`,
         {
           companyProfile,
         },

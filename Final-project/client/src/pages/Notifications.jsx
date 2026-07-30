@@ -31,7 +31,7 @@ const Notifications = () => {
 
   const fetchNotifications = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/notifications`, {
+      const res = await axios.get(`https://job-portal-v3nf.onrender.com/api/notifications`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -46,7 +46,7 @@ const Notifications = () => {
   const markAsRead = async (id) => {
     try {
       await axios.patch(
-        `${import.meta.env.VITE_API_URL}/api/notifications/${id}/read`,
+        `https://job-portal-v3nf.onrender.com/api/notifications/${id}/read`,
         {},
         {
           headers: {
@@ -65,7 +65,7 @@ const Notifications = () => {
   const markAllRead = async () => {
     try {
       await axios.patch(
-        `${import.meta.env.VITE_API_URL}/api/notifications/read-all`,
+        `https://job-portal-v3nf.onrender.com/api/notifications/read-all`,
         {},
         {
           headers: {

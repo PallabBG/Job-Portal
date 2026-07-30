@@ -23,7 +23,7 @@ const ResetPassOtp = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/reset-password`,
+        `https://job-portal-v3nf.onrender.com/api/auth/reset-password`,
         { email, otp, password }
       );
 

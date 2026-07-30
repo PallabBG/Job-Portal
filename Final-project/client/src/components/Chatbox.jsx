@@ -31,7 +31,7 @@ const Chatbox = ({
         try {
           const token = localStorage.getItem("token");
           await axios.put(
-            `${import.meta.env.VITE_API_URL}/api/messages/mark-read/${receiverId}/${currentUser._id}`,
+            `https://job-portal-v3nf.onrender.com/api/messages/mark-read/${receiverId}/${currentUser._id}`,
             {},
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -87,10 +87,10 @@ const Chatbox = ({
                 src={
                   receiver?.role === "employer"
                     ? receiver?.companyProfile?.companyLogo
-                      ? receiver.companyProfile.companyLogo?.startsWith('http') ? receiver.companyProfile.companyLogo : `${import.meta.env.VITE_API_URL}${receiver.companyProfile.companyLogo}`
+                      ? receiver.companyProfile.companyLogo?.startsWith('http') ? receiver.companyProfile.companyLogo : `https://job-portal-v3nf.onrender.com${receiver.companyProfile.companyLogo}`
                       : "/company-placeholder.png"
                     : receiver?.profileImage
-                      ? receiver.profileImage?.startsWith('http') ? receiver.profileImage : `${import.meta.env.VITE_API_URL}${receiver.profileImage}`
+                      ? receiver.profileImage?.startsWith('http') ? receiver.profileImage : `https://job-portal-v3nf.onrender.com${receiver.profileImage}`
                       : "/default-avatar.png"
                 }
                 alt=""
@@ -153,10 +153,10 @@ const Chatbox = ({
                       src={
                         receiver?.role === "employer"
                           ? receiver?.companyProfile?.companyLogo
-                            ? receiver.companyProfile.companyLogo?.startsWith('http') ? receiver.companyProfile.companyLogo : `${import.meta.env.VITE_API_URL}${receiver.companyProfile.companyLogo}`
+                            ? receiver.companyProfile.companyLogo?.startsWith('http') ? receiver.companyProfile.companyLogo : `https://job-portal-v3nf.onrender.com${receiver.companyProfile.companyLogo}`
                             : "/company-placeholder.png"
                           : receiver?.profileImage
-                            ? receiver.profileImage?.startsWith('http') ? receiver.profileImage : `${import.meta.env.VITE_API_URL}${receiver.profileImage}`
+                            ? receiver.profileImage?.startsWith('http') ? receiver.profileImage : `https://job-portal-v3nf.onrender.com${receiver.profileImage}`
                             : "/default-avatar.png"
                       }
                       alt="Avatar"

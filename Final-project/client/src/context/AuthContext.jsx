@@ -9,8 +9,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const API_BASE = import.meta.env.VITE_API_URL; // Change if you already have API_BASE
-  console.log(import.meta.env.VITE_API_URL);
+  const API_BASE = "https://job-portal-v3nf.onrender.com"; // Change if you already have API_BASE
+  console.log("https://job-portal-v3nf.onrender.com");
 
   const loadProfile = async () => {
     try {

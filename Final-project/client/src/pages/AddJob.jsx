@@ -68,7 +68,7 @@ const AddJob = () => {
         deadline: formData.deadline,
       };
 
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/jobs`, data, {
+      await axios.post(`https://job-portal-v3nf.onrender.com/api/jobs`, data, {
         headers: {
           Authorization: token,
         },

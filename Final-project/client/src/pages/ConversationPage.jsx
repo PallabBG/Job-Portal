@@ -16,7 +16,7 @@ const ConversationPage = () => {
     const fetchConversations = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/messages/conversations/${user._id}`
+          `https://job-portal-v3nf.onrender.com/api/messages/conversations/${user._id}`
         );
         setUsers(res.data);
       } catch (err) {
@@ -112,8 +112,8 @@ const ConversationPage = () => {
             filteredUsers.map((u) => {
               const displayName = u.role === "employer" ? (u.companyProfile?.companyName || u.name) : u.name;
               const displayImage = u.role === "employer" 
-                ? (u.companyProfile?.companyLogo ? u.companyProfile.companyLogo?.startsWith('http') ? u.companyProfile.companyLogo : `${import.meta.env.VITE_API_URL}${u.companyProfile.companyLogo}` : "/company-placeholder.png")
-                : (u.profileImage ? u.profileImage?.startsWith('http') ? u.profileImage : `${import.meta.env.VITE_API_URL}${u.profileImage}` : "/default-avatar.png");
+                ? (u.companyProfile?.companyLogo ? u.companyProfile.companyLogo?.startsWith('http') ? u.companyProfile.companyLogo : `https://job-portal-v3nf.onrender.com${u.companyProfile.companyLogo}` : "/company-placeholder.png")
+                : (u.profileImage ? u.profileImage?.startsWith('http') ? u.profileImage : `https://job-portal-v3nf.onrender.com${u.profileImage}` : "/default-avatar.png");
               const hasUnread = u.unreadCount > 0;
 
               return (

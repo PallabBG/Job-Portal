@@ -19,7 +19,7 @@ export const MessageProvider = ({ children }) => {
       }
 
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/messages/unread-count/${user._id}`,
+        `https://job-portal-v3nf.onrender.com/api/messages/unread-count/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

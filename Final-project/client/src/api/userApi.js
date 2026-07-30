@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const UserAPI = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}/api/auth`,
+  baseURL: `https://job-portal-v3nf.onrender.com/api/auth`,
 });
 
 export default UserAPI;

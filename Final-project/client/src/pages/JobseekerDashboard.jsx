@@ -62,7 +62,7 @@ const JobseekerDashboard = () => {
       const token = localStorage.getItem("token");
 
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/applications/jobseeker-dashboard`,
+        `https://job-portal-v3nf.onrender.com/api/applications/jobseeker-dashboard`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

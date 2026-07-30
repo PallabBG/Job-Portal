@@ -26,7 +26,7 @@ connectdb();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  process.env.CLIENT_URL
+  "https://job-portal-lemon-rho.vercel.app"
 ].filter(Boolean); // removes undefined
 
 app.use(express.urlencoded({ extended: true }));

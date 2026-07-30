@@ -17,7 +17,7 @@ const VerifyOtp = () => {
       return;
     }
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/verify-otp`,{email,otp});
+      const res = await axios.post(`https://job-portal-v3nf.onrender.com/api/auth/verify-otp`,{email,otp});
       alert(res.data.message);
       navigate("/login");
     } catch(err){

@@ -34,7 +34,7 @@ const UserManagement = () => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/users`, {
+        const res = await axios.get(`https://job-portal-v3nf.onrender.com/api/admin/users`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -52,7 +52,7 @@ const UserManagement = () => {
   const handleDeleteUser = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/admin/users/${id}`, {
+      await axios.delete(`https://job-portal-v3nf.onrender.com/api/admin/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsersData(usersData.filter(u => u._id !== id));
@@ -65,7 +65,7 @@ const UserManagement = () => {
   const handleSuspendUser = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.put(`${import.meta.env.VITE_API_URL}/api/admin/users/${id}/suspend`, {}, {
+      const res = await axios.put(`https://job-portal-v3nf.onrender.com/api/admin/users/${id}/suspend`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsersData(usersData.map(u => u._id === id ? res.data.user : u));
@@ -78,7 +78,7 @@ const UserManagement = () => {
   const handleVerifyUser = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.put(`${import.meta.env.VITE_API_URL}/api/admin/users/${id}/verify`, {}, {
+      const res = await axios.put(`https://job-portal-v3nf.onrender.com/api/admin/users/${id}/verify`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsersData(usersData.map(u => u._id === id ? res.data.user : u));

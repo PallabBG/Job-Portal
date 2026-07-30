@@ -73,7 +73,7 @@ const CandidateProfile = () => {
               <img
                 src={
                   candidate.profileImage
-                    ? candidate.profileImage?.startsWith('http') ? candidate.profileImage : `${import.meta.env.VITE_API_URL}${candidate.profileImage}`
+                    ? candidate.profileImage?.startsWith('http') ? candidate.profileImage : `https://job-portal-v3nf.onrender.com${candidate.profileImage}`
                     : `https://ui-avatars.com/api/?name=${encodeURIComponent(
                         candidate.name,
                       )}&background=2563eb&color=fff&size=256`
@@ -90,7 +90,7 @@ const CandidateProfile = () => {
 
               {resume?.resumeFile && (
                 <a
-                  href={resume.resumeFile?.startsWith('http') ? resume.resumeFile : `${import.meta.env.VITE_API_URL}/uploads/resumes/${resume.resumeFile}`}
+                  href={resume.resumeFile?.startsWith('http') ? resume.resumeFile : `https://job-portal-v3nf.onrender.com/uploads/resumes/${resume.resumeFile}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-6 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg"

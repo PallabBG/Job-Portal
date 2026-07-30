@@ -20,7 +20,7 @@ const JobCard = ({ job, onDelete }) => {
           <div className="w-16 h-16 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center overflow-hidden shrink-0 shadow-sm group-hover:scale-105 transition-transform duration-300">
             {job.employer?.companyProfile?.companyLogo ? (
               <img
-                src={job.employer.companyProfile.companyLogo?.startsWith('http') ? job.employer.companyProfile.companyLogo : `${import.meta.env.VITE_API_URL}${job.employer.companyProfile.companyLogo}`}
+                src={job.employer.companyProfile.companyLogo?.startsWith('http') ? job.employer.companyProfile.companyLogo : `https://job-portal-v3nf.onrender.com${job.employer.companyProfile.companyLogo}`}
                 alt={`${job.employer.companyProfile.companyName} Logo`}
                 className="w-full h-full object-contain p-2"
               />
