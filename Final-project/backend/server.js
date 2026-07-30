@@ -1,6 +1,4 @@
-const dns = require("node:dns");
-// Force Node to use Google DNS
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
 
 const express = require('express');
 const cors = require('cors');
