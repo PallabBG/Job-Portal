@@ -24,14 +24,25 @@ const app = express();
 
 connectdb();
 
-const allowedOrigins = process.env.CLIENT_URL 
-  ? [process.env.CLIENT_URL, "http://localhost:5173"] 
-  : ["http://localhost:5173"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.CLIENT_URL
+].filter(Boolean); // removes undefined
 
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      // Allow if it matches allowedOrigins OR if it's a vercel domain
+      if (allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
@@ -56,9 +67,17 @@ app.use("/api/applications", applicationRoutes);
 
 
 const server = http.createServer(app);
-const io = new Server(server,{
-  cors:{
-    origin: allowedOrigins,
+const io = new Server(server, {
+  cors: {
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
   },
 });
 socketInstance.init(io);
