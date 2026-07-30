@@ -62,7 +62,7 @@ const JobseekerDashboard = () => {
       const token = localStorage.getItem("token");
 
       const res = await axios.get(
-        "http://localhost:5500/api/applications/jobseeker-dashboard",
+        `${import.meta.env.VITE_API_URL}/api/applications/jobseeker-dashboard`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

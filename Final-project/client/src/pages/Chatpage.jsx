@@ -19,7 +19,7 @@ const Chatpage = () => {
     const markAsReadAndFetch = async () => {
       try {
         const token = localStorage.getItem("token");
-        await axios.put(`http://localhost:5500/api/messages/mark-read/${receiverId}/${currentUser._id}`, {}, {
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/messages/mark-read/${receiverId}/${currentUser._id}`, {}, {
           headers: { Authorization: `Bearer ${token}` }
         });
         // Emit event so other tabs sync unread count
@@ -60,7 +60,7 @@ const Chatpage = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        `http://localhost:5500/api/auth/user/${receiverId}`,
+        `${import.meta.env.VITE_API_URL}/api/auth/user/${receiverId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setReceiver(res.data);
@@ -72,7 +72,7 @@ const Chatpage = () => {
   const getMessages = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5500/api/messages/${currentUser._id}/${receiverId}`
+        `${import.meta.env.VITE_API_URL}/api/messages/${currentUser._id}/${receiverId}`
       );
       setMessages(res.data);
     } catch (error) {

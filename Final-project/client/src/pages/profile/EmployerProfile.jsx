@@ -42,7 +42,7 @@ const EmployerProfile = () => {
 
   const loadProfile = async () => {
     try {
-      const res = await axios.get("http://localhost:5500/api/auth/profile", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -80,7 +80,7 @@ const EmployerProfile = () => {
 
     try {
       const res = await axios.put(
-        "http://localhost:5500/api/auth/profile",
+        `${import.meta.env.VITE_API_URL}/api/auth/profile`,
         {
           companyProfile,
         },

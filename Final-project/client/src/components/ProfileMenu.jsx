@@ -61,7 +61,7 @@ const ProfileMenu = () => {
       >
         {avatar ? (
           <img
-            src={`http://localhost:5500${avatar}`}
+            src={avatar?.startsWith('http') ? avatar : `${import.meta.env.VITE_API_URL}${avatar}`}
             alt="Profile"
             className="w-full h-full object-cover"
           />
@@ -81,7 +81,7 @@ const ProfileMenu = () => {
               <div className="w-12 h-12 rounded-full overflow-hidden bg-blue-600 flex items-center justify-center">
                 {avatar ? (
                   <img
-                    src={`http://localhost:5500${avatar}`}
+                    src={avatar?.startsWith('http') ? avatar : `${import.meta.env.VITE_API_URL}${avatar}`}
                     alt="Profile"
                     className="w-full h-full object-cover"
                   />

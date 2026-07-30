@@ -1,3 +1,7 @@
+const dns = require("node:dns");
+// Force Node to use Google DNS
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -12,16 +16,20 @@ const socketInstance = require("./socket/socketInstance");
 const applicationRoutes = require("./routes/applicationRoutes");
 
 dotenv.config();
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 
 const app = express();
 
 connectdb();
 
+const allowedOrigins = process.env.CLIENT_URL 
+  ? [process.env.CLIENT_URL, "http://localhost:5173"] 
+  : ["http://localhost:5173"];
+
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   })
 );
@@ -48,7 +56,7 @@ app.use("/api/applications", applicationRoutes);
 const server = http.createServer(app);
 const io = new Server(server,{
   cors:{
-    origin:"http://localhost:5173",
+    origin: allowedOrigins,
   },
 });
 socketInstance.init(io);
@@ -59,7 +67,7 @@ app.get('/', (req, res) => {
   res.send("api is running");
 });
 
-const port = process.env.PORT || 5500;
+const port = process.env.PORT || 5000;
 
 server.listen(port, () => {
   console.log(`server is running on port ${port}`);

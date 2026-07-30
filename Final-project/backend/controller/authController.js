@@ -540,15 +540,13 @@ exports.uploadResume = async (req, res) => {
       });
     }
 
-    // Absolute path of uploaded PDF
-    const pdfPath = path.join(
-      __dirname,
-      "../uploads/resumes",
-      req.file.filename
-    );
+    // Cloudinary URL of uploaded PDF
+    const pdfUrl = req.file.path;
 
-    // Read PDF
-    const pdfBuffer = fs.readFileSync(pdfPath);
+    // Fetch PDF
+    const axios = require("axios");
+    const response = await axios.get(pdfUrl, { responseType: 'arraybuffer' });
+    const pdfBuffer = Buffer.from(response.data);
 
     // Extract text
     const pdfData = await pdfParse(pdfBuffer);
@@ -559,7 +557,7 @@ exports.uploadResume = async (req, res) => {
       { user: user._id },
       {
         user: user._id,
-        resumeFile: req.file.filename,
+        resumeFile: pdfUrl,
         extractedText,
       },
       {
@@ -603,13 +601,17 @@ exports.downloadResume = async (req, res) => {
       });
     }
 
-    const filePath = path.join(
-      __dirname,
-      "../uploads/resumes",
-      resume.resumeFile
-    );
-
-    res.download(filePath);
+    if (resume.resumeFile.startsWith('http')) {
+      // It's a Cloudinary URL, so we can just redirect
+      return res.redirect(resume.resumeFile);
+    } else {
+      const filePath = path.join(
+        __dirname,
+        "../uploads/resumes",
+        resume.resumeFile
+      );
+      res.download(filePath);
+    }
   } catch (err) {
     res.status(500).json({
       message: err.message,
@@ -633,8 +635,7 @@ exports.uploadCompanyLogo = async (req, res) => {
       });
     }
 
-    user.companyProfile.companyLogo =
-      `/uploads/companyLogo/${req.file.filename}`;
+    user.companyProfile.companyLogo = req.file.path;
 
     await user.save();
 
@@ -666,7 +667,7 @@ exports.uploadProfileImage = async (req, res) => {
       });
     }
 
-    user.profileImage = `/uploads/profileImage/${req.file.filename}`;
+    user.profileImage = req.file.path;
 
     await user.save();
 

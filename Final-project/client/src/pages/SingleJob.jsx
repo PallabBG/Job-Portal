@@ -111,7 +111,7 @@ const SingleJob = () => {
               <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center overflow-hidden shrink-0 shadow-sm p-4">
                 {job.employer?.companyProfile?.companyLogo ? (
                   <img
-                    src={`http://localhost:5500${job.employer.companyProfile.companyLogo}`}
+                    src={job.employer.companyProfile.companyLogo?.startsWith('http') ? job.employer.companyProfile.companyLogo : `${import.meta.env.VITE_API_URL}${job.employer.companyProfile.companyLogo}`}
                     alt="Company Logo"
                     className="w-full h-full object-contain drop-shadow-sm"
                   />

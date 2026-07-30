@@ -5,10 +5,12 @@ import socket from "../socket"
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const API_BASE = "http://localhost:5500"; // Change if you already have API_BASE
+  const API_BASE = import.meta.env.VITE_API_URL; // Change if you already have API_BASE
+  console.log(import.meta.env.VITE_API_URL);
 
   const loadProfile = async () => {
     try {

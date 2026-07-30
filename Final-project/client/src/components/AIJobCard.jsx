@@ -24,7 +24,7 @@ const AIJobCard = ({ job }) => {
           <img
             src={
               job.companyLogo
-                ? `http://localhost:5500${job.companyLogo}`
+                ? job.companyLogo?.startsWith('http') ? job.companyLogo : `${import.meta.env.VITE_API_URL}${job.companyLogo}`
                 : "/company-placeholder.png"
             }
             alt="Company Logo"

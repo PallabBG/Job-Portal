@@ -12,7 +12,7 @@ const ResetPassword = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:5500/api/auth/send-reset-otp", { email });
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/send-reset-otp`, { email });
       alert(res.data.message);
       navigate("/reset-pass-otp", { state: { email } });
     } catch (err) {

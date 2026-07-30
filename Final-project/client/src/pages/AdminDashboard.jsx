@@ -36,7 +36,7 @@ const AdminDashboard = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          "http://localhost:5500/api/admin/dashboard",
+          `${import.meta.env.VITE_API_URL}/api/admin/dashboard`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setData(res.data);

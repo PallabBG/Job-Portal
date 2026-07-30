@@ -17,7 +17,7 @@ export const NotificationProvider = ({ children }) => {
       }
 
       const res = await axios.get(
-        "http://localhost:5500/api/notifications/unread-count",
+        `${import.meta.env.VITE_API_URL}/api/notifications/unread-count`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

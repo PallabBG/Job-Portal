@@ -68,7 +68,7 @@ const AddJob = () => {
         deadline: formData.deadline,
       };
 
-      await axios.post("http://localhost:5500/api/jobs", data, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/jobs`, data, {
         headers: {
           Authorization: token,
         },

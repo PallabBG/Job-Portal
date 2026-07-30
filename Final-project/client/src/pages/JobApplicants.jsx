@@ -348,7 +348,7 @@ const JobApplicants = () => {
 
                     {app.resume?.resumeFile && (
                       <a
-                        href={`http://localhost:5500/uploads/resumes/${app.resume.resumeFile}`}
+                        href={app.resume.resumeFile?.startsWith('http') ? app.resume.resumeFile : `${import.meta.env.VITE_API_URL}/uploads/resumes/${app.resume.resumeFile}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center"

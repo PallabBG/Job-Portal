@@ -21,7 +21,7 @@ const Navbar = () => {
     const fetchUnreadChatCount = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5500/api/messages/conversations/${user._id}`
+          `${import.meta.env.VITE_API_URL}/api/messages/conversations/${user._id}`
         );
         // Calculate total unread count from all conversations
         const totalUnread = res.data.reduce((acc, conv) => acc + (conv.unreadCount || 0), 0);

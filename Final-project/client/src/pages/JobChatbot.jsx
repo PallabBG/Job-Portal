@@ -36,7 +36,7 @@ const JobChatbot = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5500/api/chatbot/job-recommend",
+        `${import.meta.env.VITE_API_URL}/api/chatbot/job-recommend`,
         {
           message: userText,
         },

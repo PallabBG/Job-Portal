@@ -1,36 +1,16 @@
 const multer = require("multer");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("../server/utils/cloudinary");
 const path = require("path");
 
-const storage = multer.diskStorage(
-    {
-        destination: function(req,file,cb) {
-            cb(null,"uploads/");
-        },
-         filename: function(req,file,cb) {
-            const uniquename = Date.now() +"_"+Math.random(Math.random()* 1000000);
-            cb(null,uniquename + path.extname(file.originalname));
-        },
-    });
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "jobportal/uploads",
+    allowed_formats: ["jpg", "jpeg", "png", "webp"],
+  },
+});
 
-   const filefilter = (req,file,cb)=> {
-    const allowed = /jpg|jpeg|png|webp/;
-    const extname = allowed.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = allowed.test(file.mimetype);
+const upload = multer({ storage: storage });
 
-     if(extname && mimetype){
-        cb(null,true);
-
-    } else {
-        cb(new Error("only image file allowed"));
-    }
-
-   };
-
-   const upload = multer({
-    storage:storage,
-    fileFilter:filefilter,
-   });
-
-   module.exports = upload;
-
-   
+module.exports = upload;

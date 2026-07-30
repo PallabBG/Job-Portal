@@ -22,7 +22,7 @@ const ProfileHeader = ({
       const token = localStorage.getItem("token");
 
       const res = await axios.put(
-        "http://localhost:5500/api/auth/upload-profile-image",
+        `${import.meta.env.VITE_API_URL}/api/auth/upload-profile-image`,
         formData,
         {
           headers: {
@@ -54,7 +54,7 @@ const ProfileHeader = ({
             <div className="w-28 h-28 rounded-full overflow-hidden bg-white dark:bg-slate-200 text-blue-600 flex items-center justify-center text-4xl font-bold shadow-2xl border-4 border-white/40">
               {user?.profileImage ? (
                 <img
-                  src={`http://localhost:5500${user.profileImage}`}
+                  src={user.profileImage?.startsWith('http') ? user.profileImage : `${import.meta.env.VITE_API_URL}${user.profileImage}`}
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />

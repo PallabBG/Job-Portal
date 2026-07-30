@@ -91,7 +91,7 @@ const ResumeCard = ({
         <div className="flex flex-wrap gap-2 mt-5">
 
           <a
-            href={`http://localhost:5500/uploads/resumes/${resume}`}
+            href={resume?.startsWith('http') ? resume : `${import.meta.env.VITE_API_URL}/uploads/resumes/${resume}`}
             target="_blank"
             rel="noreferrer"
             className="flex-1 text-center bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium py-2 rounded-lg transition"

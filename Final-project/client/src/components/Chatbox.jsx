@@ -31,7 +31,7 @@ const Chatbox = ({
         try {
           const token = localStorage.getItem("token");
           await axios.put(
-            `http://localhost:5500/api/messages/mark-read/${receiverId}/${currentUser._id}`,
+            `${import.meta.env.VITE_API_URL}/api/messages/mark-read/${receiverId}/${currentUser._id}`,
             {},
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -87,10 +87,10 @@ const Chatbox = ({
                 src={
                   receiver?.role === "employer"
                     ? receiver?.companyProfile?.companyLogo
-                      ? `http://localhost:5500${receiver.companyProfile.companyLogo}`
+                      ? receiver.companyProfile.companyLogo?.startsWith('http') ? receiver.companyProfile.companyLogo : `${import.meta.env.VITE_API_URL}${receiver.companyProfile.companyLogo}`
                       : "/company-placeholder.png"
                     : receiver?.profileImage
-                      ? `http://localhost:5500${receiver.profileImage}`
+                      ? receiver.profileImage?.startsWith('http') ? receiver.profileImage : `${import.meta.env.VITE_API_URL}${receiver.profileImage}`
                       : "/default-avatar.png"
                 }
                 alt=""
@@ -153,10 +153,10 @@ const Chatbox = ({
                       src={
                         receiver?.role === "employer"
                           ? receiver?.companyProfile?.companyLogo
-                            ? `http://localhost:5500${receiver.companyProfile.companyLogo}`
+                            ? receiver.companyProfile.companyLogo?.startsWith('http') ? receiver.companyProfile.companyLogo : `${import.meta.env.VITE_API_URL}${receiver.companyProfile.companyLogo}`
                             : "/company-placeholder.png"
                           : receiver?.profileImage
-                            ? `http://localhost:5500${receiver.profileImage}`
+                            ? receiver.profileImage?.startsWith('http') ? receiver.profileImage : `${import.meta.env.VITE_API_URL}${receiver.profileImage}`
                             : "/default-avatar.png"
                       }
                       alt="Avatar"

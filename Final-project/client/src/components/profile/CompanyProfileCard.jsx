@@ -16,7 +16,7 @@ const CompanyProfileCard = ({ editing, companyProfile, setCompanyProfile }) => {
       const token = localStorage.getItem("token");
 
       const res = await axios.post(
-        "http://localhost:5500/api/auth/company-logo",
+        `${import.meta.env.VITE_API_URL}/api/auth/company-logo`,
         formData,
         {
           headers: {
@@ -58,7 +58,7 @@ const CompanyProfileCard = ({ editing, companyProfile, setCompanyProfile }) => {
           <div className="w-44 h-44 rounded-2xl border-2 border-dashed border-gray-300 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 overflow-hidden flex items-center justify-center shadow-sm">
             {companyProfile.companyLogo ? (
               <img
-                src={`http://localhost:5500${companyProfile.companyLogo}`}
+                src={companyProfile.companyLogo?.startsWith('http') ? companyProfile.companyLogo : `${import.meta.env.VITE_API_URL}${companyProfile.companyLogo}`}
                 alt="Company Logo"
                 className="w-full h-full object-cover"
               />

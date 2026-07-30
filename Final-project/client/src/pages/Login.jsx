@@ -31,7 +31,7 @@ const Login = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:5500/api/auth/verify-login-otp",
+        `${import.meta.env.VITE_API_URL}/api/auth/verify-login-otp`,
         {
           email: form.email,
           otp: form.otp,
@@ -53,7 +53,7 @@ const Login = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:5500/api/auth/send-login-otp",
+        `${import.meta.env.VITE_API_URL}/api/auth/send-login-otp`,
         {
           email: form.email,
           password: form.password,

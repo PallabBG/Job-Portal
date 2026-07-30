@@ -286,7 +286,7 @@ const EmployerDashboard = () => {
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-100 to-violet-100 dark:from-indigo-900/40 dark:to-violet-900/40 flex items-center justify-center font-bold text-indigo-700 dark:text-indigo-300 shadow-inner overflow-hidden">
                           {app.profileImage ? (
-                            <img src={`http://localhost:5500${app.profileImage}`} alt={app.name} className="w-full h-full object-cover" />
+                            <img src={app.profileImage?.startsWith('http') ? app.profileImage : `${import.meta.env.VITE_API_URL}${app.profileImage}`} alt={app.name} className="w-full h-full object-cover" />
                           ) : (
                             app.name.charAt(0)
                           )}
