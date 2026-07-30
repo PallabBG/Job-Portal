@@ -7,6 +7,10 @@ const fs = require("fs");
 const path = require("path");
 const pdfParse = require("pdf-parse");
 const geocoder = require("../server/utils/geocoder");
+const dns = require("dns");
+
+// Force IPv4 resolution to prevent ENETUNREACH (IPv6) errors on Render/Vercel
+dns.setDefaultResultOrder("ipv4first");
 
 const sendOtpMail = async (email, otp) => {
   const transporter = nodemailer.createTransport({
