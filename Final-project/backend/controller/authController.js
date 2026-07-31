@@ -572,18 +572,33 @@ exports.uploadResume = async (req, res) => {
       });
     }
 
-    // Cloudinary URL of uploaded PDF
-    const pdfUrl = req.file.path;
-
-    // Fetch PDF
-    const axios = require("axios");
-    const response = await axios.get(pdfUrl, { responseType: 'arraybuffer' });
-    const pdfBuffer = Buffer.from(response.data);
-
-    // Extract text
+    // Extract text directly from memory buffer (avoids 401 error from Cloudinary strict delivery)
+    const pdfBuffer = req.file.buffer;
     const pdfData = await pdfParse(pdfBuffer);
-
     const extractedText = pdfData.text.trim();
+
+    // Upload to Cloudinary using upload_stream
+    const cloudinary = require("../server/utils/cloudinary");
+    
+    const uploadToCloudinary = (buffer) => {
+      return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            folder: "jobportal/resumes",
+            resource_type: "auto",
+            format: "pdf", // ensure it gets saved as pdf
+          },
+          (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+          }
+        );
+        stream.end(buffer);
+      });
+    };
+
+    const cloudinaryResult = await uploadToCloudinary(pdfBuffer);
+    const pdfUrl = cloudinaryResult.secure_url;
 
     const resume = await Resume.findOneAndUpdate(
       { user: user._id },
