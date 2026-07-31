@@ -6,12 +6,12 @@ const InfoCard = ({
   onClick,
 }) => {
   const colors = {
-    blue: "border-blue-500 bg-blue-50",
-    green: "border-green-500 bg-green-50",
-    yellow: "border-yellow-500 bg-yellow-50",
-    red: "border-red-500 bg-red-50",
-    purple: "border-purple-500 bg-purple-50",
-    indigo: "border-indigo-500 bg-indigo-50",
+    blue: "border-blue-500 bg-blue-50 dark:bg-blue-900/20",
+    green: "border-green-500 bg-green-50 dark:bg-green-900/20",
+    yellow: "border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20",
+    red: "border-red-500 bg-red-50 dark:bg-red-900/20",
+    purple: "border-purple-500 bg-purple-50 dark:bg-purple-900/20",
+    indigo: "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20",
   };
 
   return (
@@ -27,17 +27,17 @@ const InfoCard = ({
             {icon}
           </div>
 
-          <h3 className="text-xl font-bold mt-3">
+          <h3 className="text-xl font-bold mt-3 dark:text-white">
             {title}
           </h3>
 
-          <p className="text-gray-600 mt-1">
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
             {count} Record{count !== 1 && "s"}
           </p>
 
         </div>
 
-        <div className="text-blue-600 font-semibold">
+        <div className="text-blue-600 dark:text-blue-400 font-semibold">
           View →
         </div>
 
