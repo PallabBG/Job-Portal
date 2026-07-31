@@ -20,17 +20,20 @@ const sendOtpMail = async (email, otp) => {
     </div>
   `;
 
-  // Use Resend if API key is configured (for Render deployment)
-  if (process.env.RESEND_API_KEY) {
-    const { Resend } = require("resend");
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const result = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || "Job Portal <onboarding@resend.dev>",
-      to: email,
+  // Use Brevo if API key is configured (for Render deployment — sends to ANY email)
+  if (process.env.BREVO_API_KEY) {
+    const { BrevoClient } = require("@getbrevo/brevo");
+    const brevo = new BrevoClient({ apiKey: process.env.BREVO_API_KEY });
+    const result = await brevo.transactionalEmails.sendTransacEmail({
+      sender: {
+        name: "Job Portal",
+        email: process.env.BREVO_SENDER_EMAIL || process.env.EMAIL_USER,
+      },
+      to: [{ email }],
       subject: "OTP Verification - Job Portal",
-      html: htmlContent,
+      htmlContent,
     });
-    console.log("Resend result:", JSON.stringify(result));
+    console.log("Brevo result:", JSON.stringify(result));
     return;
   }
 
