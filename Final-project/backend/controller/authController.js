@@ -1,30 +1,53 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { Resend } = require("resend");
+const nodemailer = require("nodemailer");
 const Resume = require("../models/Resume");
 const fs = require("fs");
 const path = require("path");
 const pdfParse = require("pdf-parse");
 const geocoder = require("../server/utils/geocoder");
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const sendOtpMail = async (email, otp) => {
-  await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL || "Job Portal <onboarding@resend.dev>",
+  const htmlContent = `
+    <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px; background: #f8fafc; border-radius: 16px;">
+      <h2 style="color: #1e293b; margin-bottom: 8px;">OTP Verification</h2>
+      <p style="color: #64748b; margin-bottom: 24px;">Use the following OTP to verify your account:</p>
+      <div style="background: #3b82f6; color: white; font-size: 32px; font-weight: bold; letter-spacing: 8px; text-align: center; padding: 16px; border-radius: 12px; margin-bottom: 24px;">
+        ${otp}
+      </div>
+      <p style="color: #94a3b8; font-size: 14px;">This OTP will expire in 5 minutes. If you didn't request this, please ignore this email.</p>
+    </div>
+  `;
+
+  // Use Resend if API key is configured (for Render deployment)
+  if (process.env.RESEND_API_KEY) {
+    const { Resend } = require("resend");
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const result = await resend.emails.send({
+      from: process.env.RESEND_FROM_EMAIL || "Job Portal <onboarding@resend.dev>",
+      to: email,
+      subject: "OTP Verification - Job Portal",
+      html: htmlContent,
+    });
+    console.log("Resend result:", JSON.stringify(result));
+    return;
+  }
+
+  // Fallback to nodemailer/Gmail (for local development)
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  await transporter.sendMail({
+    from: process.env.EMAIL_USER,
     to: email,
     subject: "OTP Verification - Job Portal",
-    html: `
-      <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px; background: #f8fafc; border-radius: 16px;">
-        <h2 style="color: #1e293b; margin-bottom: 8px;">OTP Verification</h2>
-        <p style="color: #64748b; margin-bottom: 24px;">Use the following OTP to verify your account:</p>
-        <div style="background: #3b82f6; color: white; font-size: 32px; font-weight: bold; letter-spacing: 8px; text-align: center; padding: 16px; border-radius: 12px; margin-bottom: 24px;">
-          ${otp}
-        </div>
-        <p style="color: #94a3b8; font-size: 14px;">This OTP will expire in 5 minutes. If you didn't request this, please ignore this email.</p>
-      </div>
-    `,
+    html: htmlContent,
   });
 };
 
