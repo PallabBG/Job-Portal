@@ -9,6 +9,7 @@ exports.getDashboardData = async (req, res) => {
     const totalUsers = await User.countDocuments();
     const totalJobs = await Job.countDocuments();
     const employers = await User.countDocuments({ role: "employer" });
+    const jobseekers = await User.countDocuments({ role: "jobseeker" });
     const totalApplications = await Application.countDocuments();
 
     // Fetch recent users (last 5)
@@ -50,6 +51,7 @@ exports.getDashboardData = async (req, res) => {
       totalUsers,
       totalJobs,
       employers,
+      jobseekers,
       totalApplications,
       recentUsers,
       recentJobs,

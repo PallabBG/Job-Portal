@@ -51,12 +51,12 @@ const AdminDashboard = () => {
   }, []);
 
   // Real data mapping
-  const jobSeekers = (data.totalUsers || 0) - (data.employers || 0);
+  const jobSeekers = data.jobseekers || 0;
 
   const kpiCards = [
     { label: "Total Users", value: data.totalUsers || 0, icon: Users, color: "from-blue-500 to-cyan-500", light: "bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400" },
     { label: "Employers", value: data.employers || 0, icon: Building, color: "from-purple-500 to-pink-500", light: "bg-purple-50 text-purple-600 dark:bg-purple-500/10 dark:text-purple-400" },
-    { label: "Job Seekers", value: jobSeekers > 0 ? jobSeekers : 0, icon: UserCheck, color: "from-indigo-500 to-purple-500", light: "bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400" },
+    { label: "Job Seekers", value: jobSeekers, icon: UserCheck, color: "from-indigo-500 to-purple-500", light: "bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400" },
     { label: "Total Jobs", value: data.totalJobs || 0, icon: Briefcase, color: "from-emerald-500 to-teal-500", light: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400" },
     { label: "Applications", value: data.totalApplications || 0, icon: FileText, color: "from-orange-500 to-red-500", light: "bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-400" },
   ];
