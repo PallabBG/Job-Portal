@@ -30,6 +30,7 @@ import MyApplications from "./pages/MyApplications";
 import MyJobs from "./pages/MyJobs";
 import JobApplicants from "./pages/JobApplicants";
 import CandidateProfile from "./pages/CandidateProfile";
+import EmployerProfile from "./pages/EmployerProfile";
 import Notifications from "./pages/Notifications";
 import JobRecommendations from "./pages/JobRecommendations";
 import InterviewQuestions from "./pages/InterviewQuestions";
@@ -175,6 +176,15 @@ const App = () => {
               element={
                 <ProtectedRoute roles={["employer", "admin"]}>
                   <CandidateProfile />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/employer/:id"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <EmployerProfile />
                 </ProtectedRoute>
               }
             />

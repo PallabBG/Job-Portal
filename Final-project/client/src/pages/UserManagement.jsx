@@ -88,8 +88,12 @@ const UserManagement = () => {
     }
   };
 
-  const handleViewProfile = (id) => {
-    navigate(`/candidate/${id}`);
+  const handleViewProfile = (id, role) => {
+    if (role === "employer") {
+      navigate(`/employer/${id}`);
+    } else {
+      navigate(`/candidate/${id}`);
+    }
   };
 
   const handleChatUser = (id) => {
@@ -252,7 +256,7 @@ const UserManagement = () => {
                             <div className="fixed inset-0 z-10" onClick={() => setActiveDropdown(null)}></div>
                             <div className="absolute right-8 top-12 w-48 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 z-20 py-2 overflow-hidden animate-fade-in-up">
                               
-                              <button onClick={() => handleViewProfile(u._id)} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                              <button onClick={() => handleViewProfile(u._id, u.role)} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
                                 <Eye className="w-4 h-4 text-blue-500" /> View Profile
                               </button>
 
