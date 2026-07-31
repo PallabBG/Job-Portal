@@ -13,6 +13,10 @@ const resumeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    resumeData: {
+      type: String, // Store PDF as base64 string
+      default: null,
+    },
 
     extractedText: {
       type: String,

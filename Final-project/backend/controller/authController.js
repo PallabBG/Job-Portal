@@ -572,39 +572,20 @@ exports.uploadResume = async (req, res) => {
       });
     }
 
-    // Extract text directly from memory buffer (avoids 401 error from Cloudinary strict delivery)
+    // Extract text directly from memory buffer
     const pdfBuffer = req.file.buffer;
     const pdfData = await pdfParse(pdfBuffer);
     const extractedText = pdfData.text.trim();
 
-    // Upload to Cloudinary using upload_stream
-    const cloudinary = require("../server/utils/cloudinary");
-    
-    const uploadToCloudinary = (buffer) => {
-      return new Promise((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
-          {
-            folder: "jobportal/resumes",
-            resource_type: "auto",
-            format: "pdf", // ensure it gets saved as pdf
-          },
-          (error, result) => {
-            if (error) return reject(error);
-            resolve(result);
-          }
-        );
-        stream.end(buffer);
-      });
-    };
-
-    const cloudinaryResult = await uploadToCloudinary(pdfBuffer);
-    const pdfUrl = cloudinaryResult.secure_url;
+    // Convert PDF buffer to Base64 to store in MongoDB directly
+    const base64Data = pdfBuffer.toString('base64');
 
     const resume = await Resume.findOneAndUpdate(
       { user: user._id },
       {
         user: user._id,
-        resumeFile: pdfUrl,
+        resumeFile: "stored-in-db", // Dummy value so frontend knows it exists
+        resumeData: base64Data, // Store the actual PDF data
         extractedText,
       },
       {
@@ -648,8 +629,14 @@ exports.downloadResume = async (req, res) => {
       });
     }
 
-    if (resume.resumeFile.startsWith('http')) {
-      // It's a Cloudinary URL, so we can just redirect
+    if (resume.resumeData) {
+      // Decode base64 and send as PDF buffer
+      const buffer = Buffer.from(resume.resumeData, 'base64');
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'inline; filename="Resume.pdf"'); // "inline" allows viewing in browser
+      return res.send(buffer);
+    } else if (resume.resumeFile.startsWith('http')) {
+      // Fallback for older Cloudinary URLs
       return res.redirect(resume.resumeFile);
     } else {
       const filePath = path.join(
