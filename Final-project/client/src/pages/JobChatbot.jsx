@@ -36,7 +36,7 @@ const JobChatbot = () => {
 
     try {
       const res = await axios.post(
-        `https://job-portal-v3nf.onrender.com/api/chatbot/job-recommend`,
+        "https://job-portal-v3nf.onrender.com/api/chatbot/job-recommend",
         {
           message: userText,
         },

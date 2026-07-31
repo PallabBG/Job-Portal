@@ -31,7 +31,7 @@ const Login = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        `https://job-portal-v3nf.onrender.com/api/auth/verify-login-otp`,
+        "https://job-portal-v3nf.onrender.com/api/auth/verify-login-otp",
         {
           email: form.email,
           otp: form.otp,
@@ -53,7 +53,7 @@ const Login = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        `https://job-portal-v3nf.onrender.com/api/auth/send-login-otp`,
+        "https://job-portal-v3nf.onrender.com/api/auth/send-login-otp",
         {
           email: form.email,
           password: form.password,

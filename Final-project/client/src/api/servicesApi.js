@@ -20,7 +20,7 @@ export const getResumeFeedback = async () => {
   const token = localStorage.getItem("token");
 
   const res = await axios.get(
-    `https://job-portal-v3nf.onrender.com/api/ai/resume-feedback`,
+    "https://job-portal-v3nf.onrender.com/api/ai/resume-feedback",
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -35,7 +35,7 @@ export const getJobRecommendations = async () => {
   const token = localStorage.getItem("token");
 
   const res = await axios.get(
-    `https://job-portal-v3nf.onrender.com/api/ai/job-recommendations`,
+    "https://job-portal-v3nf.onrender.com/api/ai/job-recommendations",
     {
       headers: {
         Authorization: `Bearer ${token}`,

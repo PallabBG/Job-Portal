@@ -12,7 +12,7 @@ const ResetPassword = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post(`https://job-portal-v3nf.onrender.com/api/auth/send-reset-otp`, { email });
+      const res = await axios.post("https://job-portal-v3nf.onrender.com/api/auth/send-reset-otp", { email });
       alert(res.data.message);
       navigate("/reset-pass-otp", { state: { email } });
     } catch (err) {

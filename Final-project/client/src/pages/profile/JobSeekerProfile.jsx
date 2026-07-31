@@ -345,7 +345,10 @@ const Profile = () => {
       link.remove();
       window.URL.revokeObjectURL(url);
     } catch (err) {
-      alert("Download failed");
+      const errorMessage =
+        err.response?.data?.message ||
+        "Download failed. If this is an old resume, it may have been deleted by the server. Please re-upload.";
+      alert(errorMessage);
     }
   };
 

@@ -10,7 +10,7 @@ const dotenv = require('dotenv');
 const connectdb = require("./config/db");
 const path = require("path");
 const http = require("http");
-const {Server} = require("socket.io");
+const { Server } = require("socket.io");
 const { sockethandeler } = require("./socket/socket");
 const notificationRoutes = require("./routes/notificationRoutes");
 const socketInstance = require("./socket/socketInstance");
@@ -18,30 +18,28 @@ const socketInstance = require("./socket/socketInstance");
 const applicationRoutes = require("./routes/applicationRoutes");
 
 dotenv.config();
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const app = express();
 
 connectdb();
 
+app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://job-portal-lemon-rho.vercel.app"
-].filter(Boolean); // removes undefined
+  "http://localhost:5500",
+  process.env.CLIENT_URL,
+].filter(Boolean);
 
-app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin (like mobile apps or curl requests)
+      // Allow requests with no origin (mobile apps, curl, etc.)
       if (!origin) return callback(null, true);
-      
-      // Allow if it matches allowedOrigins OR if it's a vercel domain
-      if (allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
       }
+      return callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
   })
@@ -69,14 +67,7 @@ app.use("/api/applications", applicationRoutes);
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: allowedOrigins,
     credentials: true,
   },
 });
@@ -88,7 +79,7 @@ app.get('/', (req, res) => {
   res.send("api is running");
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5500;
 
 server.listen(port, () => {
   console.log(`server is running on port ${port}`);

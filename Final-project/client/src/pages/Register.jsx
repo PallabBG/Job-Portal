@@ -14,7 +14,7 @@ const Register = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post(`https://job-portal-v3nf.onrender.com/api/auth/register`, form);
+      const res = await axios.post("https://job-portal-v3nf.onrender.com/api/auth/register", form);
       alert(res.data.message);
       navigate("/verify-otp", { state: { email: form.email } });
     } catch (err) {

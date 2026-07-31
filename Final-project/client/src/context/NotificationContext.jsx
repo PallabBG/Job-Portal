@@ -17,7 +17,7 @@ export const NotificationProvider = ({ children }) => {
       }
 
       const res = await axios.get(
-        `https://job-portal-v3nf.onrender.com/api/notifications/unread-count`,
+        "https://job-portal-v3nf.onrender.com/api/notifications/unread-count",
         {
           headers: {
             Authorization: `Bearer ${token}`,

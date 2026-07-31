@@ -1,5 +1,5 @@
 import {io} from "socket.io-client";
-const socket = io("https://job-portal-v3nf.onrender.com" || "http://localhost:5500");
+const socket = io("https://job-portal-v3nf.onrender.com");
 
 socket.on("receiveNotification", (notification) => {
     console.log(notification);
