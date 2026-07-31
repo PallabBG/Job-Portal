@@ -251,7 +251,7 @@ exports.resetPassword = async (req, res) => {
     res.json({ message: "Password reset successful" });
 
   } catch (err) {
-    res.status(500).json({ message: "Error resetting password" });
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -579,12 +579,14 @@ exports.uploadResume = async (req, res) => {
 
     // Convert PDF buffer to Base64 to store in MongoDB directly
     const base64Data = pdfBuffer.toString('base64');
+    const backendUrl = req.protocol + '://' + req.get('host');
+    const publicViewUrl = `${backendUrl}/api/auth/view-resume/${user._id}`;
 
     const resume = await Resume.findOneAndUpdate(
       { user: user._id },
       {
         user: user._id,
-        resumeFile: "stored-in-db", // Dummy value so frontend knows it exists
+        resumeFile: publicViewUrl, // Full URL so frontend uses it directly
         resumeData: base64Data, // Store the actual PDF data
         extractedText,
       },
@@ -774,5 +776,23 @@ exports.getPublicUser = async (req, res) => {
     res.status(500).json({
       message: "Server Error",
     });
+  }
+};
+
+exports.viewResumePublic = async (req, res) => {
+  try {
+    const resume = await Resume.findOne({ user: req.params.userId });
+
+    if (!resume || !resume.resumeData) {
+      return res.status(404).json({ message: "Resume not found" });
+    }
+
+    const buffer = Buffer.from(resume.resumeData, 'base64');
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename="Resume.pdf"');
+    return res.send(buffer);
+  } catch (err) {
+    console.error("View Resume Error:", err);
+    res.status(500).json({ message: "Server error while loading resume" });
   }
 };

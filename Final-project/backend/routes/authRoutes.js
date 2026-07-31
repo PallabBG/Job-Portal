@@ -42,6 +42,11 @@ router.get(
     authController.downloadResume
 );
 
+router.get(
+    "/view-resume/:userId",
+    authController.viewResumePublic
+);
+
 router.post(
     "/company-logo",
     protect,
