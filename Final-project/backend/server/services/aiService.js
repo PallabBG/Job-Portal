@@ -8,6 +8,18 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
+(async () => {
+  try {
+    const models = await groq.models.list();
+    console.log(
+      "AVAILABLE GROQ MODELS:",
+      models.data.map(model => model.id)
+    );
+  } catch (err) {
+    console.error("Failed to list models:", err.message);
+  }
+})();
+
 const MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-20b";
 
 async function analyzeResume(job, resume) {
