@@ -81,6 +81,16 @@ app.get('/', (req, res) => {
 
 const port = process.env.PORT || 5500;
 
-server.listen(port, () => {
+server.listen(port, async () => {
   console.log(`server is running on port ${port}`);
+  try {
+    const Groq = require("groq-sdk");
+    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+    const models = await groq.models.list();
+    console.log("=== GROQ MODELS AVAILABLE FOR THIS KEY ===");
+    console.log(models.data.map(m => m.id));
+    console.log("==========================================");
+  } catch (error) {
+    console.error("Failed to list Groq models:", error.message);
+  }
 });
