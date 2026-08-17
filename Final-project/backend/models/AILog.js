@@ -40,7 +40,7 @@ const aiLogSchema = new mongoose.Schema(
 
     model: {
       type: String,
-      default: "llama-3.3-70b-versatile",
+      default: () => process.env.GROQ_MODEL || "llama-3.1-8b-instant",
     },
 
     tokens: {
