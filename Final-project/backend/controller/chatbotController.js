@@ -29,7 +29,7 @@ exports.jobchatbot = async (req,res)=>{
     .join("\n");
 
     const response = await groq.chat.completions.create({
-        model: process.env.GROQ_MODEL || "llama-3.1-8b-instant",
+        model: process.env.GROQ_MODEL || "openai/gpt-oss-20b",
         messages:[
             {
                 role:"system",

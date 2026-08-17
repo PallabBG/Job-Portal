@@ -40,7 +40,7 @@ const aiLogSchema = new mongoose.Schema(
 
     model: {
       type: String,
-      default: () => process.env.GROQ_MODEL || "llama-3.1-8b-instant",
+      default: () => process.env.GROQ_MODEL || "openai/gpt-oss-20b",
     },
 
     tokens: {
